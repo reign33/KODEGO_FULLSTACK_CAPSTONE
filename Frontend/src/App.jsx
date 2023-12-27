@@ -5,17 +5,19 @@ import SignUpUi from './components/SignUpUi';
 import Sidebar from './pages/Sidebar'
 import Dashboard from './pages/Dashboard';
 import { BrowserRouter, Routes, Route} from "react-router-dom";
+import AddCategory from './pages/AddCategory';
 
 function App() {
   return (
   <>
-  <Sidebar />
   <BrowserRouter>
   <Routes>
     <Route>
     <Route exact path="/" element={<Dashboard />} />
-        <Route path="/login" element={<LoginUi/>} />
-        <Route path="/signup" element={<SignUpUi/>} />
+        <Route path="/addcategory" element={<AddCategory/>} />
+        <Route path="/login" element={<LoginUi />} />
+        <Route path="/signup" element={<SignUpUi />} />
+
     </Route>
   </Routes>
   </BrowserRouter>

@@ -56,7 +56,7 @@ const Sidebar = () => {
                     <ListItemPrefix>
                     <ShoppingBagIcon className="h-5 w-5" />
                     </ListItemPrefix>
-                    <Typography color="blue-gray" className="mr-auto font-normal">
+                    <Typography color="blue-gray" className="mr-auto font-normal" href="/Sidebar">
                     Category
                     </Typography>
                 </AccordionHeader>
@@ -67,6 +67,7 @@ const Sidebar = () => {
                     <ListItemPrefix>
                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                     </ListItemPrefix>
+                    <link to="/addcategory" />
                     Add Category
                     </ListItem>
                     <ListItem>

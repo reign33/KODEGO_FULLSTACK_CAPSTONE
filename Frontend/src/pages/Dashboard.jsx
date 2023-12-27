@@ -1,10 +1,19 @@
 import React from 'react'
+import Sidebar from './Sidebar'
 
 const Dashboard = () => {
   return (
-    <div>
-      Dashboard
+
+    <div className='flex flex-wrap justify-start'>
+      <Sidebar />
+      <div>
+        Dashboard
+      </div>
+      
     </div>
+     
+     
+  
   )
 }
 
