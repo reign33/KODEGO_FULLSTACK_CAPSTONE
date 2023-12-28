@@ -57,14 +57,14 @@ const Sidebar = () => {
                     <ListItemPrefix>
                     <ShoppingBagIcon className="h-5 w-5" />
                     </ListItemPrefix>
-                    <Typography color="blue-gray" className="mr-auto font-normal" href="/Sidebar">
+                    <Typography color="blue-gray" className="mr-auto font-normal">
                     Category
                     </Typography>
                 </AccordionHeader>
                 </ListItem>
                 <AccordionBody className="py-1">
                 <List className="p-0">
-                    <NavLink to="/AddCategory">
+                    <NavLink to="/addcategory">
                         <ListItem>
                         <ListItemPrefix>
                             <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
@@ -72,7 +72,7 @@ const Sidebar = () => {
                         Add Category
                         </ListItem>
                     </NavLink>
-                    <NavLink to="/ManageCategory">
+                    <NavLink to="/managecategory">
                     <ListItem>
                     <ListItemPrefix>
                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
@@ -104,7 +104,7 @@ const Sidebar = () => {
                 </ListItem>
                 <AccordionBody className="py-1">
                 <List className="p-0">
-                <NavLink to="/AddUnit">
+                <NavLink to="/addunit">
                     <ListItem>
                     <ListItemPrefix>
                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
@@ -112,7 +112,7 @@ const Sidebar = () => {
                     Add Units
                     </ListItem>
                     </NavLink>
-                    <NavLink to="/ManageUnit">
+                    <NavLink to="/manageunit">
                     <ListItem>
                     <ListItemPrefix>
                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
@@ -144,7 +144,7 @@ const Sidebar = () => {
                 </ListItem>
                 <AccordionBody className="py-1">
                 <List className="p-0">
-                <NavLink to="/AddProducts">
+                <NavLink to="/addproducts">
                     <ListItem>
                     <ListItemPrefix>
                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
@@ -152,7 +152,7 @@ const Sidebar = () => {
                     Add Products
                     </ListItem>
                     </NavLink>
-                    <NavLink to="/ManageProducts">
+                    <NavLink to="/manageproducts">
                     <ListItem>
                     <ListItemPrefix>
                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
@@ -163,7 +163,7 @@ const Sidebar = () => {
                 </List>
                 </AccordionBody>
             </Accordion>
-            <NavLink to="/Users">
+            <NavLink to="/users">
             <ListItem>
                 <ListItemPrefix>
                 <InboxIcon className="h-5 w-5" />
@@ -171,7 +171,7 @@ const Sidebar = () => {
                 Users Management
             </ListItem>
             </NavLink>
-            <NavLink to="/Reports">
+            <NavLink to="/reports">
             <ListItem>
                 <ListItemPrefix>
                 <UserCircleIcon className="h-5 w-5" />
@@ -185,12 +185,15 @@ const Sidebar = () => {
                 </ListItemPrefix>
                 Settings
             </ListItem>
-            <ListItem>
-                <ListItemPrefix>
-                <PowerIcon className="h-5 w-5" />
-                </ListItemPrefix>
+
+            <NavLink to="/login">
+                <ListItem>
+                    <ListItemPrefix>
+                        <PowerIcon className="h-5 w-5" />
+                    </ListItemPrefix>
                 Log Out
-            </ListItem>
+                </ListItem>
+            </NavLink>
         </List>
     </Card>
   )

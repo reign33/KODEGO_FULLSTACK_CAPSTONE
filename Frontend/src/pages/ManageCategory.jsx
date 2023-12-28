@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar'
 import {
   MagnifyingGlassIcon,
@@ -18,7 +19,7 @@ import {
   Tab,
   Tooltip,
 } from "@material-tailwind/react";
- 
+
 const TABS = [
   {
     label: "All",
@@ -55,6 +56,12 @@ const TABLE_ROWS = [
 ];
 
 const ManageCategory = () => {
+
+  const navigate = useNavigate();
+  const navigateTo = () => {
+    navigate('/addcategory');
+  };
+
   return (
     <div className="flex">
       <Sidebar />
@@ -71,9 +78,11 @@ const ManageCategory = () => {
                 </Typography>
               </div>
               <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-                <Button className="flex items-center gap-3" size="sm">
+                
+                <Button className="flex items-center gap-3" size="sm" onClick={navigateTo}>
                   <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add Category
                 </Button>
+                
               </div>
             </div>
             <div className="flex flex-col items-center justify-between gap-4 md:flex-row">

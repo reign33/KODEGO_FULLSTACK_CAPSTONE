@@ -18,7 +18,7 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Dashboard />} />
+          <Route exact path="/" element={<Dashboard />} />
           <Route path="/addunit" element={<AddUnit />} />
           <Route path="/manageunit" element={<ManageUnit />} />
           <Route path="/addcategory" element={<AddCategory />} />
