@@ -35,12 +35,14 @@ const Sidebar = () => {
         </Typography>
         </div>
         <List>
+            <NavLink to="/">
             <ListItem>
                 <ListItemPrefix>
                     <PresentationChartBarIcon className="h-5 w-5" />
                 </ListItemPrefix>
                 Dashboard
             </ListItem>
+            </NavLink>
             <Accordion
                 open={open === 1}
                 icon={
