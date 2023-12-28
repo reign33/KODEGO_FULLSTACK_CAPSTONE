@@ -1,12 +1,11 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom';
 import {
   Card,
   Typography,
   List,
   ListItem,
   ListItemPrefix,
-  ListItemSuffix,
-  Chip,
   Accordion,
   AccordionHeader,
   AccordionBody,
@@ -63,13 +62,14 @@ const Sidebar = () => {
                 </ListItem>
                 <AccordionBody className="py-1">
                 <List className="p-0">
-                    <ListItem>
-                    <ListItemPrefix>
-                        <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                    </ListItemPrefix>
-                    <link to="/addcategory" />
-                    Add Category
-                    </ListItem>
+                    <NavLink to="/ManageCategory">
+                        <ListItem>
+                        <ListItemPrefix>
+                            <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                        </ListItemPrefix>
+                        Add Category
+                        </ListItem>
+                    </NavLink>
                     <ListItem>
                     <ListItemPrefix>
                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
