@@ -62,7 +62,7 @@ const Sidebar = () => {
                 </ListItem>
                 <AccordionBody className="py-1">
                 <List className="p-0">
-                    <NavLink to="/ManageCategory">
+                    <NavLink to="/AddCategory">
                         <ListItem>
                         <ListItemPrefix>
                             <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
@@ -70,12 +70,14 @@ const Sidebar = () => {
                         Add Category
                         </ListItem>
                     </NavLink>
+                    <NavLink to="/ManageCategory">
                     <ListItem>
                     <ListItemPrefix>
                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                     </ListItemPrefix>
                     Manage Category
                     </ListItem>
+                    </NavLink>
                 </List>
                 </AccordionBody>
             </Accordion>
@@ -100,18 +102,22 @@ const Sidebar = () => {
                 </ListItem>
                 <AccordionBody className="py-1">
                 <List className="p-0">
+                <NavLink to="/AddUnit">
                     <ListItem>
                     <ListItemPrefix>
                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                     </ListItemPrefix>
                     Add Units
                     </ListItem>
+                    </NavLink>
+                    <NavLink to="/ManageUnit">
                     <ListItem>
                     <ListItemPrefix>
                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                     </ListItemPrefix>
                     Manage Units
                     </ListItem>
+                    </NavLink>
                 </List>
                 </AccordionBody>
             </Accordion>
@@ -136,33 +142,41 @@ const Sidebar = () => {
                 </ListItem>
                 <AccordionBody className="py-1">
                 <List className="p-0">
+                <NavLink to="/AddProducts">
                     <ListItem>
                     <ListItemPrefix>
                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                     </ListItemPrefix>
                     Add Products
                     </ListItem>
+                    </NavLink>
+                    <NavLink to="/ManageProducts">
                     <ListItem>
                     <ListItemPrefix>
                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                     </ListItemPrefix>
                     Manage Products
                     </ListItem>
+                    </NavLink>
                 </List>
                 </AccordionBody>
             </Accordion>
+            <NavLink to="/Users">
             <ListItem>
                 <ListItemPrefix>
                 <InboxIcon className="h-5 w-5" />
                 </ListItemPrefix>
                 Users Management
             </ListItem>
+            </NavLink>
+            <NavLink to="/Reports">
             <ListItem>
                 <ListItemPrefix>
                 <UserCircleIcon className="h-5 w-5" />
                 </ListItemPrefix>
                 Reports
             </ListItem>
+            </NavLink>
             <ListItem>
                 <ListItemPrefix>
                 <Cog6ToothIcon className="h-5 w-5" />

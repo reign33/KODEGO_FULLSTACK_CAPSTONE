@@ -10,6 +10,8 @@ import ManageCategory from './pages/ManageCategory';
 import ManageUnit from './pages/ManageUnit';
 import AddProducts from './pages/AddProducts';
 import AddUnit from './pages/AddUnit';
+import Users from './pages/Users';
+import Reports from './pages/Reports';
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
           <Route path="/managecategory" element={<ManageCategory />} />
           <Route path="/addproducts" element={<AddProducts />} />
           <Route path="/manageproducts" element={<ManageProducts />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/reports" element={<Reports />} />
           <Route path="/login" element={<LoginUi />} />
           <Route path="/signup" element={<SignUpUi />} />
         </Routes>
