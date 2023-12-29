@@ -13,7 +13,7 @@ const AddProducts = () => {
   return (
     <div className="flex">
           <Sidebar />
-      <div className='flex flex-wrap justify-start w-full p-8'>
+      <div className='flex flex-wrap justify-start w-full p-4'>
         <Card color="transparent" shadow={false}>
           <Typography variant="h4" color="blue-gray">
             Add Products
