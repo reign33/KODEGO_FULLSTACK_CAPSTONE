@@ -69,6 +69,17 @@ const AddProducts = () => {
                   <Option>litre</Option>
                 </Select>
               </div>
+              <Typography variant="h6" color="blue-gray" className="-mb-3">
+                Price
+              </Typography>
+              <Input
+                size="lg"
+                placeholder="₱ 0.00"
+                className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                labelProps={{
+                  className: "before:content-none after:content-none",
+                }}
+              />
             </div>
             <Button className="mt-6" fullWidth>
               Add Product
