@@ -1,5 +1,6 @@
 import React from 'react'
 import Sidebar from './Sidebar'
+import { useNavigate } from 'react-router-dom';
 import {
   MagnifyingGlassIcon,
   ChevronUpDownIcon,
@@ -71,6 +72,13 @@ const TABLE_ROWS = [
 ];
 
 const ManageUnit = () => {
+
+  const navigate = useNavigate();
+  const navigateTo = () => {
+    navigate('/addunit');
+  };
+
+
   return (
     <div className="flex bg-gray-50">
       <Sidebar />
@@ -87,7 +95,7 @@ const ManageUnit = () => {
               </Typography>
             </div>
             <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-              <Button className="flex items-center gap-3" size="sm">
+              <Button className="flex items-center gap-3" size="sm" onClick={navigateTo}>
                 <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add Unit
               </Button>
             </div>
