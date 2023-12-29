@@ -36,7 +36,7 @@ const TABS = [
   },
 ];
  
-const TABLE_HEAD = ["Product Name", "Category", "Quantity", "Units", "Action"];
+const TABLE_HEAD = ["Product Name", "Category", "Quantity", "Units", "Price", "Action"];
  
 const TABLE_ROWS = [
   {
@@ -44,30 +44,39 @@ const TABLE_ROWS = [
     category: "Skin Care",
     quantity: "1345",
     units: "pcs",
+    price: "₱ 75",
+
   },
   {
     productname: "Tide Bar",
     category: "Skin Care",
     quantity: "1565",
     units: "pcs",
+    price: "₱ 76",
+
   },
   {
     productname: "Chlorine",
     category: "Skin Care",
     quantity: "34",
     units: "pcs",
+    price: "₱ 10",
+
   },
   {
     productname: "Red Horse",
     category: "Energy Drink",
     quantity: "1000105",
     units: "pcs",
+    price: "₱ 20",
+
   },
   {
     productname: "Balot",
     category: "Magic Beans",
     quantity: "5",
     units: "pcs",
+    price: "₱ 15",
   },
 ];
 
@@ -143,7 +152,7 @@ const ManageProducts = () => {
               </thead>
               <tbody>
                 {TABLE_ROWS.map(
-                  ({ productname, category, quantity, units }, index) => {
+                  ({ productname, category, quantity, units, price }, index) => {
                     const isLast = index === TABLE_ROWS.length - 1;
                     const classes = isLast
                       ? "p-4"
@@ -172,7 +181,7 @@ const ManageProducts = () => {
                               color="blue-gray"
                               className="font-normal"
                             >
-                              {category}
+                              {quantity}
                             </Typography>
                           </div>
                         </td>
@@ -188,13 +197,26 @@ const ManageProducts = () => {
                           </div>
                         </td>
                         <td className={classes}>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal"
-                          >
-                            {units}
-                          </Typography>
+                          <div className="flex flex-col">
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="font-normal"
+                            >
+                              {units}
+                            </Typography>
+                          </div>
+                        </td>
+                        <td className={classes}>
+                          <div className="flex flex-col">
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="font-normal"
+                            >
+                              {price}
+                            </Typography>
+                          </div>
                         </td>
                         <td className={classes}>
                           <div className="flex gap-4">
