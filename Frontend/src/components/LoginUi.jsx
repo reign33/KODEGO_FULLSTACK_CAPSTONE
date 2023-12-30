@@ -1,27 +1,49 @@
-import React ,{useState} from 'react'
- //import { useNavigate } from 'react-router-dom';
-// import {getAuth, signInWithEmailAndPassword} from 'firebase/auth'
- 
+import React ,{useState, useEffect} from 'react'
+import { useNavigate } from 'react-router-dom';
+import userService from '../services/userService';
 
-function LoginUi(){
-//   const [email, setEmail] = useState('');
-//   const [password,setPassword] = useState('');
-//   const auth =getAuth()
- // const navigate =useNavigate()
+function LoginUi({user, setUser, isLoading, setIsLoading}){
+   const [username, setUsername] = useState('');
+   const [password, setPassword] = useState('');
 
-   function handleSignIn(e){
-    e.preventDefault() 
-    // signInWithEmailAndPassword(auth,email,password)
-    // .then((user)=>{
-    //   //success
-    //   console.log(user)
-    //   navigate('/')
-    //   //...
-    // })
-    // .catch((error)=>{
-    //   console.log(error)
-    // })
+const navigate = useNavigate();
+
+useEffect(() => {
+  if (user) {
+    navigate("/");
+  }
+}, [user, navigate]);
+
+function handleSignIn(e){
+  e.preventDefault();
+    
+  setIsLoading(true);
+
+  const credentials = {
+      username,
+      password,
+    };
+
+  userService
+    .login(credentials)
+    .then((res) => {
+      window.localStorage.setItem("loggedNotesUser", JSON.stringify(res));
+      setUser(res);
+      navigate("/");
+      setUsername("");
+      setPassword("");
+    })
+    .catch((error) => console.log(error))
+    .finally(() => setIsLoading(false));
+
+    if (isLoading === true) {
+      return (
+        <div className="flex flex-col justify-center items-center h-screen p-4">
+          <LoadingSpinner />
+        </div>
+      );
     }
+  };
 
   return (
     <div>
@@ -35,23 +57,23 @@ function LoginUi(){
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                   Sign in to your account
               </h1>
-              <form className="space-y-4 md:space-y-6" action="#">
+              <form onSubmit={handleSignIn} className="space-y-4 md:space-y-6">
                   <div>
                       <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
                       <input 
                       type="email" 
                       name="email" 
-                      id="email" 
-                      onChange={(e)=>{setEmail(e.target.value)}}
+                      value = {username}
+                      onChange={(e)=>{setUsername(e.target.value)}}
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required/>
                   </div>
                   <div>
                       <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
                       <input 
                       type="password" 
-                      name="password" 
-                      id="password" 
-                      placeholder="••••••••" 
+                      name="password"  
+                      placeholder="••••••••"
+                      value = {password} 
                       onChange={(e)=>{setPassword(e.target.value)}}
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required/>
                   </div>
@@ -67,7 +89,6 @@ function LoginUi(){
                   </div>
                   <button 
                   type="submit" 
-                  onClick={(e)=>{handleSignIn(e)}}
                   className="w-full text-white bg-blue-400 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Sign in</button>
                   <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                       Don’t have an account yet? <a href="/signup" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
