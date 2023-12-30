@@ -1,8 +1,10 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import "./index.css";
 import LoginUi from "./components/LoginUi";
 import SignUpUi from './components/SignUpUi';
+import noteService from "./services/userService.js";
 import Dashboard from './pages/Dashboard';
 import AddCategory from './pages/AddCategory';
 import ManageProducts from './pages/ManageProducts';
@@ -14,11 +16,26 @@ import Users from './pages/Users';
 import Reports from './pages/Reports';
 
 function App() {
+  const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // useEffect(() => {
+  //   const loggedUserJSON = window.localStorage.getItem("loggedNotesUser");
+
+  //   if (loggedUserJSON) {
+  //     const user = JSON.parse(loggedUserJSON);
+  //     noteService.setToken(user.token);
+  //     setUser(user);
+  //   }
+  // }, []);
+
+  
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route exact path="/" element={<Dashboard />} />
+
+          <Route path="/" element={<Dashboard />} />
           <Route path="/addunit" element={<AddUnit />} />
           <Route path="/manageunit" element={<ManageUnit />} />
           <Route path="/addcategory" element={<AddCategory />} />
@@ -27,8 +44,22 @@ function App() {
           <Route path="/manageproducts" element={<ManageProducts />} />
           <Route path="/users" element={<Users />} />
           <Route path="/reports" element={<Reports />} />
-          <Route path="/login" element={<LoginUi />} />
-          <Route path="/signup" element={<SignUpUi />} />
+          <Route 
+          path="/login" 
+          element={<LoginUi
+            user={user}
+            setUser={setUser}
+            isLoading={isLoading}
+            setIsLoading={setIsLoading}
+          />} />
+          <Route 
+          path="/signup" 
+          element={<SignUpUi
+            user={user}
+            isLoading={isLoading}
+            setIsLoading={setIsLoading}
+          />} />
+
         </Routes>
       </BrowserRouter>
     </>

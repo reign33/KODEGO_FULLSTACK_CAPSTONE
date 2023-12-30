@@ -1,27 +1,55 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react';
+import LoadingSpinner from './LoadingSpinner';
+import userService from '../services/userService';
+import { useNavigate } from 'react-router-dom';
 
-function SignUpUi(){
-//   const [email, setEmail] = useState('');
-//   const [password,setPassword] = useState('');
-//   const auth =getAuth()
+function SignUpUi({user, isLoading, setIsLoading}){
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmpassword, setConfirmpassword] = useState("");
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (user) {
+          navigate("/");
+        }
+      }, [user, navigate]);
 
  function handleSignUp(e){
-    e.preventDefault()
-    // createUserWithEmailAndPassword(auth,email,password)
-    // .then((user)=>{
-    //   //success
-    //   console.log(user)
-    //   //...
-    // })
-    // .catch((error)=>{
-    //   console.log(error)
-    // })
+    e.preventDefault();
+
+    setIsLoading(true);
+
+    const credentials = {
+      username,
+      password,
+    };
+
+    userService
+    .register(credentials)
+    .then((_) => {
+      navigate("/login");
+      setUsername("");
+      setPassword("");
+    })
+    .catch((error) => console.log(error))
+    .finally(() => setIsLoading(false));
     }
+
+    if (isLoading === true) {
+        return (
+          <div className="flex flex-col justify-center items-center h-screen p-4">
+            <LoadingSpinner />
+          </div>
+        );
+      }
+
   return (
     <>
-      <section className="bg-indigo-100 dark:bg-gray-900">
-  <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-      <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+    <section className="bg-indigo-100 dark:bg-gray-900">
+    <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+        <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
       <h2 className=' rounded-md px-2 text-white bg-blue-400'>REL Inventory System</h2>  
       </a>
       <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
@@ -31,14 +59,15 @@ function SignUpUi(){
               </h1>
               <form 
               className="space-y-4 md:space-y-6" 
-              action="#">
+              onSubmit={handleSignUp}
+              >
                   <div>
                       <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
                       <input 
                       type="email" 
                       name="email" 
-                      id="email" 
-                      onChange={(e)=>{setEmail(e.target.value)}}
+                      value={username} 
+                      onChange={(e)=>{setUsername(e.target.value)}}
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required/>
                   </div>
                   <div>
@@ -46,8 +75,9 @@ function SignUpUi(){
                       <input 
                       type="password" 
                       name="password" 
-                      id="password" 
-                      placeholder="••••••••" 
+                      value={password} 
+                      placeholder="••••••••"
+                      onChange={(e)=>{setPassword(e.target.value)}} 
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required/>
                   </div>
                   <div>
@@ -55,7 +85,8 @@ function SignUpUi(){
                       <input 
                       type="confirm-password" 
                       name="confirm-password" 
-                      id="confirm-password" 
+                      value = {confirmpassword}
+                      onChange={(e)=>{setConfirmpassword(e.target.value)}} 
                       placeholder="••••••••" 
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required/>
                   </div>
@@ -69,7 +100,6 @@ function SignUpUi(){
                   </div>
                   <button  
                   type="submit" 
-                  onClick={(e)=>{handleSignUp(e)}}
                   className="w-full text-white bg-blue-400 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Create an account</button>
                   <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                       Already have an account? <a href="/login" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</a>
