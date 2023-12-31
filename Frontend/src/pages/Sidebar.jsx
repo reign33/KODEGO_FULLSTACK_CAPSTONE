@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import {
   Card,
   Typography,
@@ -22,7 +22,12 @@ import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 
 const Sidebar = () => {
   const [open, setOpen] = React.useState(0);
- 
+  const navigate = useNavigate();
+
+  const handleLogout = () =>{
+    navigate('/login');
+  };
+
     const handleOpen = (value) => {
       setOpen(open === value ? 0 : value);
     };
@@ -187,14 +192,14 @@ const Sidebar = () => {
                 Settings
             </ListItem>
 
-            <NavLink to="/login">
-                <ListItem>
+            
+                <ListItem onClick={handleLogout}>
                     <ListItemPrefix>
                         <PowerIcon className="h-5 w-5" />
                     </ListItemPrefix>
                 Log Out
                 </ListItem>
-            </NavLink>
+        
         </List>
     </Card>
     </div>
