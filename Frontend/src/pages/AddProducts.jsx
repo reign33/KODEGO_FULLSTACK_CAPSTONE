@@ -1,18 +1,24 @@
-import React from 'react'
-import Sidebar from './Sidebar'
+import React, {useEffect} from 'react'
+import { useNavigate } from 'react-router-dom';
 import {
   Card,
   Input,
   Checkbox,
-  Button,
+  Button, 
   Typography,
 } from "@material-tailwind/react";
 import { Select, Option } from "@material-tailwind/react";
 
-const AddProducts = () => {
+const AddProducts = ({user}) => {
+  const navigate = useNavigate();
+
+  useEffect(()=>{
+    if(!user){
+      navigate('/login');
+    }
+  }, [user, navigate]);
+
   return (
-    // <div className="flex">
-    //       <Sidebar />
       <div className='flex flex-wrap justify-start w-full p-4'>
         <Card color="transparent" shadow={false}>
           <Typography variant="h4" color="blue-gray">
@@ -87,7 +93,6 @@ const AddProducts = () => {
           </form>
         </Card>
       </div>
-    //</div>
   )
 }
 

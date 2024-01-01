@@ -1,5 +1,5 @@
-import React from 'react'
-import Sidebar from './Sidebar'
+import React, {useEffect} from 'react'
+import { useNavigate } from 'react-router-dom';
 import {
   Card,
   Input,
@@ -7,10 +7,16 @@ import {
   Typography,
 } from "@material-tailwind/react";
 
-const AddUnit = () => {
+const AddUnit = ({user}) => {
+  const navigate = useNavigate();
+
+  useEffect(()=>{
+    if(!user){
+      navigate('/login');
+    }
+  }, [user, navigate]);
+
   return (
-    // <div className="flex">
-    //       <Sidebar />
       <div className='flex flex-wrap justify-start w-full p-4'>
         <Card color="transparent" shadow={false}>
           <Typography variant="h4" color="blue-gray">
@@ -38,7 +44,6 @@ const AddUnit = () => {
           </form>
         </Card>
       </div>
-   // </div>
   )
 }
 

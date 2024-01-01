@@ -20,13 +20,15 @@ import {
 } from "@heroicons/react/24/solid";
 import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 
-const Sidebar = () => {
+const Sidebar = ({setUser}) => {
   const [open, setOpen] = React.useState(0);
   const navigate = useNavigate();
 
-  const handleLogout = () =>{
+  const handleLogout = () => {
+    window.localStorage.removeItem("loggedUser");
+    setUser(null);
     navigate('/login');
-  };
+  }
 
     const handleOpen = (value) => {
       setOpen(open === value ? 0 : value);

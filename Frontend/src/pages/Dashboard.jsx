@@ -1,5 +1,4 @@
 import React from 'react'
-import Sidebar from './Sidebar'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -18,21 +17,10 @@ const handleLogout = () => {
 }
 
   return (
-    <>
-    {/* <div className='flex flex-wrap justify-start'>
-        <Sidebar/>
-       <div className='flex flex-col ...'> */}
-      <div className='flex flex-col ...'>
+      <div className='flex flex-col flex-wrap justify-start w-full p-4'>
         <p>Dashboard</p>
-        <p>{user?.username} is logged in{" "}</p>
-        <button className='bg-green-400 text-[20px]' onClick={handleLogout}>
-          Logout
-        </button>
-        </div>
-
-       {/* </div>
-     </div> */}
-    </>
+        <p className='font-bold text-[16px] text-[green]'>{user?.username} is logged in{" "}</p>
+      </div>
   )
 }
 

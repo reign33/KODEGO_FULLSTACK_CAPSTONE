@@ -1,5 +1,5 @@
-import React from 'react'
-import Sidebar from './Sidebar'
+import React, {useEffect} from 'react'
+import { useNavigate } from 'react-router-dom';
 import {
   Card,
   Input,
@@ -8,10 +8,16 @@ import {
 } from "@material-tailwind/react";
 
 
-const AddCategory = () => {
+const AddCategory = ({user}) => {
+  const navigate = useNavigate();
+
+  useEffect(()=>{
+    if(!user){
+      navigate('/login');
+    }
+  }, [user, navigate]);
+
   return (
-    // <div className="flex">
-    //       <Sidebar />
       <div className='flex flex-wrap justify-start w-full p-4'>
         <Card color="transparent" shadow={false}>
           <Typography variant="h4" color="blue-gray">
@@ -39,7 +45,6 @@ const AddCategory = () => {
           </form>
         </Card>
       </div>
-    // </div>
   )
 }
 

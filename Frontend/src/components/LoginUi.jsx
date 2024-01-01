@@ -27,7 +27,7 @@ function handleSignIn(e){
   userService
     .login(credentials)
     .then((res) => {
-      window.localStorage.setItem("loggedNotesUser", JSON.stringify(res));
+      window.localStorage.setItem("loggedUser", JSON.stringify(res));
       setUser(res); //matatandaan ng browser na may naka login
       navigate("/");
       setUsername("");

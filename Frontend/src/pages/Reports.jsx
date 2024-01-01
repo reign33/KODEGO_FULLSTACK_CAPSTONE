@@ -1,15 +1,20 @@
-import React from 'react'
-import Sidebar from './Sidebar'
+import React, {useEffect} from 'react'
+import { useNavigate } from 'react-router-dom';
 
 
-const Reports = () => {
+const Reports = ({user}) => {
+  const navigate = useNavigate();
+
+  useEffect(()=>{
+    if(!user){
+      navigate('/login');
+    }
+  }, [user, navigate]);
+
   return (
-    // <div className='flex'>
-    //     <Sidebar />
-        <div className='flex flex-wrap justify-start w-full p-8'>
+        <div className='flex justify-start w-full p-4'>
         Reports 
         </div>
-        //</div>
   )
 }
 

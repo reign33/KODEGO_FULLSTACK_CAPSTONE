@@ -1,5 +1,4 @@
-import React from 'react'
-import Sidebar from './Sidebar'
+import React, {useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
 import {
   MagnifyingGlassIcon,
@@ -61,17 +60,21 @@ const TABLE_ROWS = [
   },
 ];
 
-const ManageUnit = () => {
+const ManageUnit = ({user}) => {
 
   const navigate = useNavigate();
   const navigateTo = () => {
     navigate('/addunit');
   };
 
+  useEffect(()=>{
+    if(!user){
+      navigate('/login');
+    }
+  }, [user, navigate]);
+
 
   return (
-    // <div className="flex bg-gray-50">
-    //   <Sidebar />
       <div className='flex justify-start w-full p-4'>
         <Card className="h-full w-full p-5">
         <CardHeader floated={false} shadow={false} className="rounded-none">
@@ -201,7 +204,6 @@ const ManageUnit = () => {
         </CardFooter>
       </Card>
       </div>
-   // </div>
   )
 }
 

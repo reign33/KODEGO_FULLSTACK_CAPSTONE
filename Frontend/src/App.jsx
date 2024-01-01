@@ -33,8 +33,7 @@ function AppContent() {
   const hideSidebar2 = location.pathname == '/signup';
 
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem("loggedNotesUser");
-
+    const loggedUserJSON = window.localStorage.getItem("loggedUser");
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
       // noteService.setToken(user.token);
@@ -45,8 +44,8 @@ function AppContent() {
   
   return (
       
-    < div className={!hideSidebar1&&!hideSidebar2 &&'flex bg-gray-50'}>
-        {!hideSidebar1&&!hideSidebar2 && <Sidebar />}
+  < div className={!hideSidebar1&&!hideSidebar2? 'flex bg-gray-50' : ''}>
+    {!hideSidebar1&&!hideSidebar2 && <Sidebar user={user} setUser={setUser} />}
       
       <Routes>
       <Route 
@@ -66,14 +65,14 @@ function AppContent() {
           />} />
 
           <Route path="/" element={<Dashboard user={user} setUser={setUser}/>} />
-          <Route path="/addunit" element={<AddUnit />} />
-          <Route path="/manageunit" element={<ManageUnit />} />
-          <Route path="/addcategory" element={<AddCategory />} />
-          <Route path="/managecategory" element={<ManageCategory />} />
-          <Route path="/addproducts" element={<AddProducts />} />
-          <Route path="/manageproducts" element={<ManageProducts />} />
-          <Route path="/manageusers" element={<Users />} />
-          <Route path="/reports" element={<Reports />} />
+          <Route path="/addunit" element={<AddUnit user={user} />} />
+          <Route path="/manageunit" element={<ManageUnit user={user} />} />
+          <Route path="/addcategory" element={<AddCategory user={user} />} />
+          <Route path="/managecategory" element={<ManageCategory user={user} />} />
+          <Route path="/addproducts" element={<AddProducts user={user} />} />
+          <Route path="/manageproducts" element={<ManageProducts user={user} />} />
+          <Route path="/manageusers" element={<Users user={user} />} />
+          <Route path="/reports" element={<Reports user={user} />} />
       </Routes>
       </div>
       

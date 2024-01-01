@@ -1,6 +1,5 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
-import Sidebar from './Sidebar'
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { PencilIcon,TrashIcon, UserPlusIcon } from "@heroicons/react/24/solid";
 import {
@@ -56,16 +55,20 @@ const TABLE_ROWS = [
   },
 ];
 
-const ManageCategory = () => {
+const ManageCategory = ({user}) => {
 
   const navigate = useNavigate();
   const navigateTo = () => {
     navigate('/addcategory');
   };
 
+  useEffect(()=>{
+    if(!user){
+      navigate('/login');
+    }
+  }, [user, navigate]);
+
   return (
-    // <div className="flex bg-gray-50">
-    //   <Sidebar />
       <div className='flex flex-wrap justify-start w-full p-4'>
         <Card className="h-full w-full p-5">
 
@@ -199,7 +202,6 @@ const ManageCategory = () => {
         </CardFooter>
       </Card>
       </div>
-    // </div>
   )
 }
 
