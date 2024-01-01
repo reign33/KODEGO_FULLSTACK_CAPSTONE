@@ -64,8 +64,8 @@ const ManageCategory = () => {
   };
 
   return (
-    <div className="flex bg-gray-50">
-      <Sidebar />
+    // <div className="flex bg-gray-50">
+    //   <Sidebar />
       <div className='flex flex-wrap justify-start w-full p-4'>
         <Card className="h-full w-full p-5">
 
@@ -199,7 +199,7 @@ const ManageCategory = () => {
         </CardFooter>
       </Card>
       </div>
-    </div>
+    // </div>
   )
 }
 

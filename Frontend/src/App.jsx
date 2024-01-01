@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import "./index.css";
 import LoginUi from "./components/LoginUi";
 import SignUpUi from './components/SignUpUi';
@@ -14,10 +14,23 @@ import AddProducts from './pages/AddProducts';
 import AddUnit from './pages/AddUnit';
 import Users from './pages/Users';
 import Reports from './pages/Reports';
+import Sidebar from './pages/Sidebar';
 
 function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
+    </BrowserRouter>
+  );
+}
+
+function AppContent() {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  const location = useLocation();
+  const hideSidebar1 = location.pathname == '/login';
+  const hideSidebar2 = location.pathname == '/signup';
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem("loggedNotesUser");
@@ -31,20 +44,15 @@ function App() {
 
   
   return (
-    <>
-      <BrowserRouter>
-        <Routes>
+      
+    <div className='flex justify-start'>
+      <div className='col-auto'>
+        {!hideSidebar1&&!hideSidebar2 && <Sidebar />}
+      </div>
 
-          <Route path="/" element={<Dashboard user={user} setUser={setUser}/>} />
-          <Route path="/addunit" element={<AddUnit />} />
-          <Route path="/manageunit" element={<ManageUnit />} />
-          <Route path="/addcategory" element={<AddCategory />} />
-          <Route path="/managecategory" element={<ManageCategory />} />
-          <Route path="/addproducts" element={<AddProducts />} />
-          <Route path="/manageproducts" element={<ManageProducts />} />
-          <Route path="/users" element={<Users />} />
-          <Route path="/reports" element={<Reports />} />
-          <Route 
+      <div>
+      <Routes>
+      <Route 
           path="/login" 
           element={<LoginUi
             user={user}
@@ -52,18 +60,28 @@ function App() {
             isLoading={isLoading}
             setIsLoading={setIsLoading}
           />} />
-          <Route 
+       <Route 
           path="/signup" 
           element={<SignUpUi
             user={user}
             isLoading={isLoading}
             setIsLoading={setIsLoading}
           />} />
-
-        </Routes>
-      </BrowserRouter>
-    </>
+          <Route path="/" element={<Dashboard user={user} setUser={setUser}/>} />
+          <Route path="/addunit" element={<AddUnit />} />
+          <Route path="/manageunit" element={<ManageUnit />} />
+          <Route path="/addcategory" element={<AddCategory />} />
+          <Route path="/managecategory" element={<ManageCategory />} />
+          <Route path="/addproducts" element={<AddProducts />} />
+          <Route path="/manageproducts" element={<ManageProducts />} />
+          <Route path="/manageusers" element={<Users />} />
+          <Route path="/reports" element={<Reports />} />
+      </Routes>
+      </div>
+    </div>
+    
   );
 }
+
 
 export default App;
