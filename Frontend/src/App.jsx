@@ -43,14 +43,14 @@ function App() {
             setIsLoading={setIsLoading}
           />} />
         <Route>
-          <Layout />
+          <Layout user={user} />
         </Route>
       </Routes>
     </BrowserRouter>
   );
 }
 
-const Layout = () => {
+const Layout = (user) => {
   const location = useLocation();
   const hideSidebar = location.pathname === '/login'; // Check if current route is '/login'
 
