@@ -45,12 +45,9 @@ function AppContent() {
   
   return (
       
-    <div className='flex justify-start'>
-      <div className='col-auto'>
+    < div className={!hideSidebar1&&!hideSidebar2 &&'flex bg-gray-50'}>
         {!hideSidebar1&&!hideSidebar2 && <Sidebar />}
-      </div>
-
-      <div>
+      
       <Routes>
       <Route 
           path="/login" 
@@ -67,6 +64,7 @@ function AppContent() {
             isLoading={isLoading}
             setIsLoading={setIsLoading}
           />} />
+
           <Route path="/" element={<Dashboard user={user} setUser={setUser}/>} />
           <Route path="/addunit" element={<AddUnit />} />
           <Route path="/manageunit" element={<ManageUnit />} />
@@ -78,7 +76,8 @@ function AppContent() {
           <Route path="/reports" element={<Reports />} />
       </Routes>
       </div>
-    </div>
+      
+ 
     
   );
 }
