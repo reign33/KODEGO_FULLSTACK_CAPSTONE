@@ -70,8 +70,8 @@ const ManageUnit = () => {
 
 
   return (
-    <div className="flex bg-gray-50">
-      <Sidebar />
+    // <div className="flex bg-gray-50">
+    //   <Sidebar />
       <div className='flex flex-wrap justify-start w-full p-4'>
         <Card className="h-full w-full p-5">
         <CardHeader floated={false} shadow={false} className="rounded-none">
@@ -201,7 +201,7 @@ const ManageUnit = () => {
         </CardFooter>
       </Card>
       </div>
-    </div>
+   // </div>
   )
 }
 

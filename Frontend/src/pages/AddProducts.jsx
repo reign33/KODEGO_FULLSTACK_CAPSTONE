@@ -11,8 +11,8 @@ import { Select, Option } from "@material-tailwind/react";
 
 const AddProducts = () => {
   return (
-    <div className="flex">
-          <Sidebar />
+    // <div className="flex">
+    //       <Sidebar />
       <div className='flex flex-wrap justify-start w-full p-4'>
         <Card color="transparent" shadow={false}>
           <Typography variant="h4" color="blue-gray">
@@ -87,7 +87,7 @@ const AddProducts = () => {
           </form>
         </Card>
       </div>
-    </div>
+    //</div>
   )
 }
 
