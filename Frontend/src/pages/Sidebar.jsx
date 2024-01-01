@@ -169,7 +169,7 @@ const Sidebar = () => {
                 </List>
                 </AccordionBody>
             </Accordion>
-            <NavLink to="/users">
+            <NavLink to="/manageusers">
             <ListItem>
                 <ListItemPrefix>
                 <InboxIcon className="h-5 w-5" />
