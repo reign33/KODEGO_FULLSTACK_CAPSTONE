@@ -35,6 +35,7 @@ const Sidebar = ({setUser}) => {
     };
 
   return (
+    
     <div className='flex p-4'>
     <Card className="sticky top-4 h-[calc(100vh-2rem)] w-full max-w-[20rem] p-2 shadow-xl shadow-blue-gray-900/5">
         <div className="mb-2 p-4">
