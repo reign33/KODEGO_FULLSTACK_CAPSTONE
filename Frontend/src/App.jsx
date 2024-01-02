@@ -15,6 +15,7 @@ import AddUnit from './pages/AddUnit';
 import Users from './pages/Users';
 import Reports from './pages/Reports';
 import Sidebar from './pages/Sidebar';
+import NavbarSignIn from './pages/navbarSignIn';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function AppContent() {
   const location = useLocation();
   const hideSidebar1 = location.pathname == '/login';
   const hideSidebar2 = location.pathname == '/signup';
+ 
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem("loggedUser");
@@ -64,6 +66,8 @@ function AppContent() {
             setIsLoading={setIsLoading}
           />} />
 
+
+          <Route path="/navbaradmin" element={<NavbarSignIn user={user} />} />
           <Route path="/" element={<Dashboard user={user} setUser={setUser}/>} />
           <Route path="/addunit" element={<AddUnit user={user} />} />
           <Route path="/manageunit" element={<ManageUnit user={user} />} />
@@ -73,6 +77,8 @@ function AppContent() {
           <Route path="/manageproducts" element={<ManageProducts user={user} />} />
           <Route path="/manageusers" element={<Users user={user} />} />
           <Route path="/reports" element={<Reports user={user} />} />
+          
+          
       </Routes>
       </div>
       
