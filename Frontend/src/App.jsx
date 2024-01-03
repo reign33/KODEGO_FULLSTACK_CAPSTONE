@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import "./index.css";
 import LoginUi from "./components/LoginUi";
 import SignUpUi from './components/SignUpUi';
@@ -66,15 +66,19 @@ function AppContent() {
           isLoading={isLoading}
           setIsLoading={setIsLoading}
           />} />
-        <Route path="/" element={<Dashboard user={user} setUser={setUser}/>} />
-        <Route path="/addunit" element={<AddUnit user={user} />} />
-        <Route path="/manageunit" element={<ManageUnit user={user} />} />
-        <Route path="/addcategory" element={<AddCategory user={user} />} />
-        <Route path="/managecategory" element={<ManageCategory user={user} />} />
-        <Route path="/addproducts" element={<AddProducts user={user} />} />
-        <Route path="/manageproducts" element={<ManageProducts user={user} />} />
-        <Route path="/manageusers" element={<Users user={user} />} />
-        <Route path="/reports" element={<Reports user={user} />} />    
+
+          <Route path="/" element={<Dashboard user={user} setUser={setUser}/>} />
+          <Route path="/addunit" element={<AddUnit user={user} />} />
+          <Route path="/manageunit" element={<ManageUnit user={user} />} />
+          <Route path="/addcategory" element={<AddCategory user={user} />} />
+          <Route path="/managecategory" element={<ManageCategory user={user} />} />
+          <Route path="/addproducts" element={<AddProducts user={user} />} />
+          <Route path="/manageproducts" element={<ManageProducts user={user} />} />
+          <Route path="/manageusers" element={<Users user={user} />} />
+          <Route path="/reports" element={<Reports user={user} />} />
+
+          <Route path="*" element={<Navigate to="/login"/>} />
+        
       </Routes>
     </div>
   </div>
