@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import "./index.css";
 import LoginUi from "./components/LoginUi";
 import SignUpUi from './components/SignUpUi';
@@ -45,29 +45,28 @@ function AppContent() {
 
   
   return (
-      
-  < div className={!hideSidebar1&&!hideSidebar2? 'flex bg-gray-50' : ''}>
-    {!hideSidebar1&&!hideSidebar2 && <Sidebar user={user} setUser={setUser} />}
+  <div>
+    {!hideSidebar1&&!hideSidebar2 && <NavbarSignIn user={user} setUser={setUser} />}
+      <div className={!hideSidebar1&&!hideSidebar2? 'flex bg-gray-50' : ''}>
+        {!hideSidebar1&&!hideSidebar2 && <Sidebar user={user} setUser={setUser} />}
       
       <Routes>
-      <Route 
+        <Route 
           path="/login" 
           element={<LoginUi
-            user={user}
-            setUser={setUser}
-            isLoading={isLoading}
-            setIsLoading={setIsLoading}
+          user={user}
+          setUser={setUser}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
           />} />
-       <Route 
+        <Route 
           path="/signup" 
           element={<SignUpUi
-            user={user}
-            isLoading={isLoading}
-            setIsLoading={setIsLoading}
+          user={user}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
           />} />
 
-
-          <Route path="/navbaradmin" element={<NavbarSignIn user={user} />} />
           <Route path="/" element={<Dashboard user={user} setUser={setUser}/>} />
           <Route path="/addunit" element={<AddUnit user={user} />} />
           <Route path="/manageunit" element={<ManageUnit user={user} />} />
@@ -79,13 +78,12 @@ function AppContent() {
           <Route path="/reports" element={<Reports user={user} />} />
 
           <Route path="*" element={<Navigate to="/login"/>} />
-          
-          
+        
       </Routes>
-      </div>
+    </div>
+  </div>
       
  
-    
   );
 }
 
