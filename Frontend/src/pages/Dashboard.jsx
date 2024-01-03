@@ -12,15 +12,9 @@ useEffect(()=>{
   }
 }, [user, navigate]);
 
-const handleLogout = () => {
-  window.localStorage.removeItem("loggedNotesUser");
-  setUser(null);
-}
-
   return (
     <div className='flex flex-col flex-wrap justify-start w-full p-4'>
         <p>Dashboard</p>
-        <p className='font-bold text-[16px] text-[green]'>{user?.username} is logged in{" "}</p>
       </div>
   )
 }
