@@ -45,45 +45,41 @@ function AppContent() {
 
   
   return (
-      
-  < div className={!hideSidebar1&&!hideSidebar2? 'flex bg-gray-50' : ''}>
-    {!hideSidebar1&&!hideSidebar2 && <Sidebar user={user} setUser={setUser} />}
+  <div>
+    {!hideSidebar1&&!hideSidebar2 && <NavbarSignIn user={user} setUser={setUser} />}
+      <div className={!hideSidebar1&&!hideSidebar2? 'flex bg-gray-50' : ''}>
+        {!hideSidebar1&&!hideSidebar2 && <Sidebar user={user} setUser={setUser} />}
       
       <Routes>
-      <Route 
+        <Route 
           path="/login" 
           element={<LoginUi
-            user={user}
-            setUser={setUser}
-            isLoading={isLoading}
-            setIsLoading={setIsLoading}
+          user={user}
+          setUser={setUser}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
           />} />
-       <Route 
+        <Route 
           path="/signup" 
           element={<SignUpUi
-            user={user}
-            isLoading={isLoading}
-            setIsLoading={setIsLoading}
+          user={user}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
           />} />
-
-
-          <Route path="/navbaradmin" element={<NavbarSignIn user={user} />} />
-          <Route path="/" element={<Dashboard user={user} setUser={setUser}/>} />
-          <Route path="/addunit" element={<AddUnit user={user} />} />
-          <Route path="/manageunit" element={<ManageUnit user={user} />} />
-          <Route path="/addcategory" element={<AddCategory user={user} />} />
-          <Route path="/managecategory" element={<ManageCategory user={user} />} />
-          <Route path="/addproducts" element={<AddProducts user={user} />} />
-          <Route path="/manageproducts" element={<ManageProducts user={user} />} />
-          <Route path="/manageusers" element={<Users user={user} />} />
-          <Route path="/reports" element={<Reports user={user} />} />
-          
-          
+        <Route path="/" element={<Dashboard user={user} setUser={setUser}/>} />
+        <Route path="/addunit" element={<AddUnit user={user} />} />
+        <Route path="/manageunit" element={<ManageUnit user={user} />} />
+        <Route path="/addcategory" element={<AddCategory user={user} />} />
+        <Route path="/managecategory" element={<ManageCategory user={user} />} />
+        <Route path="/addproducts" element={<AddProducts user={user} />} />
+        <Route path="/manageproducts" element={<ManageProducts user={user} />} />
+        <Route path="/manageusers" element={<Users user={user} />} />
+        <Route path="/reports" element={<Reports user={user} />} />    
       </Routes>
-      </div>
+    </div>
+  </div>
       
  
-    
   );
 }
 

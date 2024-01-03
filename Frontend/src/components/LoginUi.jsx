@@ -5,6 +5,7 @@ import userService from '../services/userService';
 function LoginUi({user, setUser, isLoading, setIsLoading}){
    const [username, setUsername] = useState('');
    const [password, setPassword] = useState('');
+   const [incorrect, setIncorrect] = useState('');
 
 const navigate = useNavigate();
 
@@ -32,8 +33,9 @@ function handleSignIn(e){
       navigate("/");
       setUsername("");
       setPassword("");
+      setIncorrect("");
     })
-    .catch((error) => console.log(error))
+    .catch((error) =>{console.log(error); setIncorrect(error)})
     .finally(() => setIsLoading(false));
 
     if (isLoading === true) {
@@ -81,7 +83,7 @@ function handleSignIn(e){
                       autoComplete="current-password"
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required/>
                   </div>
-                  {/* {user && <p style={{ color: 'red' }}>Incorrect Password</p> } */}
+                  {incorrect && <p style={{ color: 'red' }}>Incorrect Email or Password</p>}
 
 
                   <div className="flex items-center justify-between">
