@@ -77,6 +77,8 @@ function AppContent() {
           <Route path="/manageproducts" element={<ManageProducts user={user} />} />
           <Route path="/manageusers" element={<Users user={user} />} />
           <Route path="/reports" element={<Reports user={user} />} />
+
+          <Route path="*" element={<Navigate to="/login"/>} />
           
           
       </Routes>
