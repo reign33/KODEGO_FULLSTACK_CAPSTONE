@@ -10,6 +10,8 @@ function CategoryList({ category, setCategory, isLoading, setIsLoading }) {
     });
   }, []);
 
+  //Testing
+
   const handleDelete = (id) => {
     setIsLoading(true);
 
