@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-route
 import "./index.css";
 import LoginUi from "./components/LoginUi";
 import SignUpUi from './components/SignUpUi';
-// import noteService from "./services/userService.js";
+import categoryService from "./services/categoryService.js";
 import Dashboard from './pages/Dashboard';
 import AddCategory from './pages/AddCategory';
 import ManageProducts from './pages/ManageProducts';
@@ -38,7 +38,7 @@ function AppContent() {
     const loggedUserJSON = window.localStorage.getItem("loggedUser");
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
-      // noteService.setToken(user.token);
+      categoryService.setToken(user.token);
       setUser(user);
     }
   }, []);
@@ -70,7 +70,16 @@ function AppContent() {
           <Route path="/" element={<Dashboard user={user} setUser={setUser}/>} />
           <Route path="/addunit" element={<AddUnit user={user} />} />
           <Route path="/manageunit" element={<ManageUnit user={user} />} />
-          <Route path="/addcategory" element={<AddCategory user={user} />} />
+          
+          <Route 
+          path="/addcategory" 
+          element={<AddCategory 
+          user={user} 
+          setUser={setUser} 
+          isLoading={isLoading} 
+          setIsLoading={setIsLoading} 
+          />} />
+
           <Route path="/managecategory" element={<ManageCategory user={user} />} />
           <Route path="/addproducts" element={<AddProducts user={user} />} />
           <Route path="/manageproducts" element={<ManageProducts user={user} />} />
