@@ -120,7 +120,7 @@ async function updateCategory(req, res, next) {
       context: "query",
     });
 
-    if (!updatedCategory) return res.status(404).send({ error: "Note not found!" });
+    if (!updatedCategory) return res.status(404).send({ error: "Category not found!" });
 
     return res.status(200).json(updatedCategory);
   } catch (error) {
