@@ -3,12 +3,13 @@ import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useNavigate } from 'react-router-dom'
+import Logo from '../asset/REL_Logo.png'
 
 const navigation = [
-  { name: 'Dashboard', href: '#', current: true },
+  { name: 'Calendar', href: '#', current: true },
   // { name: 'Team', href: '#', current: false },
   // { name: 'Projects', href: '#', current: false },
-  { name: 'Calendar', href: '#', current: false },
+  { name: 'Time', href: '#', current: false },
 ]
 
 //edit
@@ -29,7 +30,7 @@ export default function NavbarSignIn({user, setUser}) {
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
         <>
-          <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+          <div className="max-w-7xl px-2 sm:px-6 lg:px-8">
             <div className="relative flex h-16 items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
@@ -46,9 +47,9 @@ export default function NavbarSignIn({user, setUser}) {
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
                   <img
-                    className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                    alt="Your Company"
+                    className="mr-20 h-10 w-auto"
+                    src={Logo}
+                    alt="REL Logo"
                   />
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
@@ -90,7 +91,7 @@ export default function NavbarSignIn({user, setUser}) {
                       <img
                         className="h-8 w-8 rounded-full"
                         src="/rcprofilepic.png"
-                        alt=""
+                        alt="Profile Pic"
                       />
                     </Menu.Button>
                   </div>
