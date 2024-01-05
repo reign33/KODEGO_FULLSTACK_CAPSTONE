@@ -9,6 +9,10 @@ export default defineConfig({
       "/users": {
         target: "http://localhost:3001",
         changeOrigin: true,
+      },
+      "/category": {
+        target: "http://localhost:3001",
+        changeOrigin: true,
       }
     }
   }
