@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import "./index.css";
 import LoginUi from "./components/LoginUi";
 import SignUpUi from './components/SignUpUi';
@@ -17,15 +17,8 @@ import Reports from './pages/Reports';
 import Sidebar from './pages/Sidebar';
 import NavbarSignIn from './pages/navbarSignIn';
 
-function App() {
-  return (
-    <BrowserRouter>
-      <AppContent />
-    </BrowserRouter>
-  );
-}
 
-function AppContent() {
+function App() {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 

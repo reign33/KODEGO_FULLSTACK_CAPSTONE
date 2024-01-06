@@ -20,7 +20,7 @@ morgan.token("body", function (req, res) {
 
 app.use(cors());
 app.use(express.json());
-// app.use(express.static("dist"));
+app.use(express.static("dist"));
 app.use(morgan(":method :url :status :body")); //terminal logger
 
 app.use("/users", userRouter);

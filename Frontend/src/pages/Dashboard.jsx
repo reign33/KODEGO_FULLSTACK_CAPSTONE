@@ -1,7 +1,6 @@
 import React from 'react'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-// import NavbarSignIn from './navbarSignIn';
 import {
   Card,
   CardBody,
@@ -14,6 +13,7 @@ import { Square3Stack3DIcon } from "@heroicons/react/24/outline";
 // If you're using Next.js please use the dynamic import for react-apexcharts and remove the import from the top for the react-apexcharts
 // import dynamic from "next/dynamic";
 // const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+
 const bartConfig = {
   type: "bar",
   height: 240,
@@ -217,12 +217,7 @@ useEffect(()=>{
           <Typography variant="h6" color="blue-gray">
             Sales
           </Typography>
-          <Typography
-            variant="small"
-            color="gray"
-            className="max-w-sm font-normal"
-          >
-          </Typography>
+         
         </div>
       </CardHeader>
       <CardBody className="px-2 pb-0">
@@ -245,12 +240,6 @@ useEffect(()=>{
           <div>
             <Typography variant="h6" color="blue-gray">
               Product
-            </Typography>
-            <Typography
-              variant="small"
-              color="gray"
-              className="max-w-sm font-normal"
-            >
             </Typography>
           </div>
         </CardHeader>
