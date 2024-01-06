@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import { useNavigate } from 'react-router-dom';
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { PencilIcon,TrashIcon, UserPlusIcon } from "@heroicons/react/24/solid";
@@ -18,6 +18,7 @@ import {
   IconButton,
   Tooltip,
 } from "@material-tailwind/react";
+import axios from 'axios';
 
 const TABS = [
   {
@@ -67,6 +68,14 @@ const ManageCategory = ({user}) => {
       navigate('/login');
     }
   }, [user, navigate]);
+
+  const [category, setCategory] = useState([])
+
+  useEffect(() => {
+    axios.get('http://localhost:3001')
+    .then(result => setCategory(result.data))
+    .catch(err => console.log(err))
+  })
 
   return (
       <div className='flex flex-wrap justify-start w-full p-4'>
@@ -129,8 +138,8 @@ const ManageCategory = ({user}) => {
               </tr>
             </thead>
             <tbody>
-              {TABLE_ROWS.map(
-                ({ Number, category }, index) => {
+              {category.map(
+                ({ Number, cat }, index) => {
                   const isLast = index === TABLE_ROWS.length - 1;
                   const classes = isLast
                     ? "p-4 "
@@ -159,7 +168,7 @@ const ManageCategory = ({user}) => {
                               color="blue-gray"
                               className="font-normal"
                             >
-                              {category}
+                              {cat}
                             </Typography>
                           </div>
                         </div>

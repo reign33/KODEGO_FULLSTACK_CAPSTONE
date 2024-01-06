@@ -7,45 +7,47 @@ import {
   Typography,
 } from "@material-tailwind/react";
 
-const AddUnit = ({user}) => {
-  const navigate = useNavigate();
+const UpdateCategory = ({user}) => {
+    const navigate = useNavigate();
 
-  useEffect(()=>{
-    if(!user){
-      navigate('/login');
-    }
-  }, [user, navigate]);
+    useEffect(()=>{
+        if(!user){
+        navigate('/login');
+        }
+    }, [user, navigate]);
 
   return (
-      <div className='flex flex-wrap justify-start w-full p-4'>
+
+    <div className='flex flex-wrap justify-start w-full p-4'>
         <Card color="transparent" shadow={false}>
           <Typography variant="h4" color="blue-gray">
-            Add Products Unit
+            Add Products Category
           </Typography>
           <Typography color="gray" className="mt-1 font-normal">
-            use this form to add product unit to database.
+            use this form to add product category to database.
           </Typography>
-          <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
+          <form 
+          className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
             <div className="mb-1 flex flex-col gap-6">
               <Typography variant="h6" color="blue-gray" className="-mb-3">
-                Product Unit
+                Product Category
               </Typography>
+
               <Input
                 size="lg"
-                placeholder="name@mail.com"
                 className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
                 labelProps={{
                   className: "before:content-none after:content-none",
                 }}
               />
             </div>
-            <Button className="mt-6" fullWidth>
-              Add Product Unit
+            <Button type='submit' className="mt-6" fullWidth>
+              Update Product Category
             </Button>
           </form>
         </Card>
-      </div>
+    </div>
   )
 }
 
-export default AddUnit
+export default UpdateCategory
