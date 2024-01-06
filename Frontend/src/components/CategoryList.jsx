@@ -26,7 +26,7 @@ function CategoryList({ category, setCategory, isLoading, setIsLoading }) {
 
   if (isLoading === true) {
     return (
-      <div className="flex flex-col justify-center items-center h-screen p-4">
+      <div className="flex justify-center items-center h-screen p-4">
         <LoadingSpinner />
       </div>
     );
@@ -36,13 +36,14 @@ function CategoryList({ category, setCategory, isLoading, setIsLoading }) {
     <div>
     <ul className="my-4 flex flex-col gap-2">
       {category.map((cat) => (
-        <li className="flex items-center justify-between" key={cat.id}>
-          <div className="flex items-center gap-4">
-            <img className="w-8" src={cat.photoInfo.url} /> {cat.content}
+        <li className="flex items-center justify-between p-[7px] bg-[#E6E6E6] rounded-lg" key={cat.id}>
+          <div className="flex items-center gap-4 font-bold">
+            <img className="w-12 border border-[green] border-[2px]" src={cat.photoInfo.url} />
+            <div>{cat.content}</div>
           </div>
           <button
             onClick={() => handleDelete(cat.id)}
-            className="text-red-500"
+            className="text-red-400 font-medium"
           >
             <FaRegTrashCan />
           </button>
