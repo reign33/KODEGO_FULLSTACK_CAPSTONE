@@ -12,26 +12,23 @@ async function getUsers(req, res) {
 } //this function is just for checking para pwede i hit sa browser for testing
 
 async function createUser(req, res, next) {
+  try {
   const { username, password } = req.body;
-
   const saltRounds = 10; //level of hashing
   const passwordHash = await bcrypt.hash(password, saltRounds); // two params (data, how complicated the hashing)
-
   const user = new User({
     username,
     passwordHash,
   });
-
-  try {
-    const savedUser = await user.save();
-
-    return res.status(201).json(savedUser);
+  const savedUser = await user.save();
+  return res.status(201).json(savedUser);
   } catch (error) {
     next(error);
   }
 }
 
 async function loginUser(req, res, next) {
+  try {
   const { username, password } = req.body;
   const user = await User.findOne({ username });
 
@@ -55,7 +52,11 @@ async function loginUser(req, res, next) {
   return res
     .status(200)
     .json({ token, username: user.username, name: user.name });
+}catch(error){
+  next(error);
 }
+  
+} 
 
 export default {
   createUser,

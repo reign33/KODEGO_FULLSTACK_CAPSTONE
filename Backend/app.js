@@ -10,6 +10,7 @@ import config from "./utils/config.js";
 import upload from "./utils/multer.js";
 
 const MONGODB_URI = config.MONGODB_URI;
+
 const app = express();
 
 connectToDB(MONGODB_URI);
@@ -17,10 +18,9 @@ connectToDB(MONGODB_URI);
 morgan.token("body", function (req, res) {
   return JSON.stringify(req.body);
 });
-
+// app.use(express.static('dist'));
 app.use(cors());
 app.use(express.json());
-app.use(express.static("dist"));
 app.use(morgan(":method :url :status :body")); //terminal logger
 
 app.use("/users", userRouter);

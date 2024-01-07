@@ -23,8 +23,8 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
 
   const location = useLocation();
-  const hideSidebar1 = location.pathname == '/login';
-  const hideSidebar2 = location.pathname == '/signup';
+  const hideSidebar1 = location.pathname === '/login';
+  const hideSidebar2 = location.pathname === '/signup';
  
 
   useEffect(() => {
@@ -73,7 +73,8 @@ function App() {
           setIsLoading={setIsLoading} 
           />} />
 
-          <Route path="/managecategory" element={<ManageCategory user={user} />} />
+          <Route path="/managecategory" element={<ManageCategory 
+          user={user} isLoading={isLoading} setIsLoading={setIsLoading} />} />
           <Route path="/addproducts" element={<AddProducts user={user} />} />
           <Route path="/manageproducts" element={<ManageProducts user={user} />} />
           <Route path="/manageusers" element={<Users user={user} />} />

@@ -23,7 +23,7 @@ export default function NavbarSignIn({user, setUser}) {
   const handleLogout = () => {
             window.localStorage.removeItem("loggedUser");
             setUser(null);
-            navigate('/login');
+            navigate('/signup');
           }
 
   return (

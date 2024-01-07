@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react';
+import LoadingSpinner from '../components/LoadingSpinner';
 import { useNavigate } from 'react-router-dom';
 import {
   MagnifyingGlassIcon,
@@ -88,9 +89,17 @@ const ManageProducts = ({user}) => {
 
   useEffect(()=>{
     if(!user){
-      navigate('/login');
+      navigate('/signup');
     }
   }, [user, navigate]);
+
+  if (isLoading === true) {
+    return (
+      <div className="flex flex-col justify-center items-center h-screen p-4">
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
 
   return (

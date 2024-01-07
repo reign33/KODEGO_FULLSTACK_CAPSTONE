@@ -31,7 +31,7 @@ const AddCategory = ({user, isLoading, setIsLoading}) => {
       .then((res) => {
         setCategory(category.concat(res));
         setNewFile(null);
-        setNewNote("");
+        setNewCategory("");
       })
       .catch((error) => console.log(error))
       .finally(() => setIsLoading(false));
@@ -39,7 +39,7 @@ const AddCategory = ({user, isLoading, setIsLoading}) => {
 
   useEffect(()=>{
     if(!user){
-      navigate('/login');
+      navigate('/signup');
     }
   }, [user, navigate]);
 

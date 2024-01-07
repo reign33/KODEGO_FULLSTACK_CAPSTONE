@@ -10,8 +10,6 @@ function CategoryList({ category, setCategory, isLoading, setIsLoading }) {
     });
   }, []);
 
-  //Testing
-
   const handleDelete = (id) => {
     setIsLoading(true);
 
@@ -35,7 +33,7 @@ function CategoryList({ category, setCategory, isLoading, setIsLoading }) {
   return (
     <div>
     <ul className="my-4 flex flex-col gap-2">
-      {category.map((cat) => (
+      {Array.isArray(category) && category.map((cat) => (
         <li className="flex items-center justify-between p-[7px] bg-[#E6E6E6] rounded-lg" key={cat.id}>
           <div className="flex items-center gap-4 font-bold">
             <img className="w-12 border border-[green] border-[2px]" src={cat.photoInfo.url} />

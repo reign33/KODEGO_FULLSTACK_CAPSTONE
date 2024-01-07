@@ -1,4 +1,6 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
+import LoadingSpinner from '../components/LoadingSpinner';
+import categoryService from '../services/categoryService';
 import { useNavigate } from 'react-router-dom';
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { PencilIcon,TrashIcon, UserPlusIcon } from "@heroicons/react/24/solid";
@@ -36,38 +38,62 @@ const TABS = [
  
 const TABLE_HEAD = ["No.", "Category", "Action"];
  
-const TABLE_ROWS = [
-  {
-    Number: "1",
-    category: "Food",
-  },
-  {
-    Number: "2",
-    category: "Drinks",
-  },
-  {
-    Number: "3",
-    category: "Skin Care",
-  },
-  {
-    Number: "4",
-    category: "Furniture",
-  },
-];
 
-const ManageCategory = ({user}) => {
+const ManageCategory = ({user, isLoading, setIsLoading}) => {
 
+  const [cat, setCat] = useState([]);
   const navigate = useNavigate();
+
+   const generateID = () => {
+    const maxId = cat.length > 0 ? Math.max(...cat.map(n =>n.id)) : 0;
+    return maxId + 1;
+ };
+
   const navigateTo = () => {
     navigate('/addcategory');
   };
 
   useEffect(()=>{
     if(!user){
-      navigate('/login');
+      navigate('/signup');
     }
   }, [user, navigate]);
 
+  const fetchData = async () => {
+    try {
+      const res = await categoryService.getCategories();
+      setCat(res);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const handleDelete = (id) => {
+    setIsLoading(true);
+
+    categoryService
+      .deleteCategory(id)
+      .then((_) => {
+        setCat(cat.filter((cat) => cat.id !== id));
+      })
+      .catch((error) => console.log(error))
+      .finally(() => setIsLoading(false));
+  };
+
+  if (isLoading === true) {
+    return (
+      <div className="flex justify-center items-center h-screen p-4">
+        <LoadingSpinner />
+      </div>
+    );
+  }
+ 
   return (
       <div className='flex flex-wrap justify-start w-full p-4'>
         <Card className="h-full w-full p-5">
@@ -129,15 +155,16 @@ const ManageCategory = ({user}) => {
               </tr>
             </thead>
             <tbody>
-              {TABLE_ROWS.map(
-                ({ Number, category }, index) => {
-                  const isLast = index === TABLE_ROWS.length - 1;
+              {Array.isArray(cat) && cat.map(
+                (data) => {
+                  
+                  const isLast = cat.length > 0? Math.max(...cat.map(n=>n.id))+1:0;
                   const classes = isLast
                     ? "p-4 "
                     : "p-4 border-b border-blue-gray-50";
   
                   return (
-                    <tr key={Number}>
+                    <tr key={data.id}>
                       <td className={classes}>
                         <div className="flex items-center gap-3 pr-60">
                           <div className="flex flex-col text-center">
@@ -146,7 +173,7 @@ const ManageCategory = ({user}) => {
                               color="blue-gray"
                               className="font-normal"
                             >
-                              {Number}
+                              {String(generateID())}
                             </Typography>
                           </div>
                         </div>
@@ -159,7 +186,7 @@ const ManageCategory = ({user}) => {
                               color="blue-gray"
                               className="font-normal"
                             >
-                              {category}
+                              {data.content}
                             </Typography>
                           </div>
                         </div>
@@ -173,7 +200,7 @@ const ManageCategory = ({user}) => {
                             </Button>
                           </Tooltip>
                           <Tooltip content="Delete Product">
-                            <Button className="flex gap-1" color="red">
+                            <Button onClick={() => handleDelete(data.id)} className="flex gap-1" color="red">
                               <TrashIcon className="h-4 w-4" />
                                 Delete
                             </Button>

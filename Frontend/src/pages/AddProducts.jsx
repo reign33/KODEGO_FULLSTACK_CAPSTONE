@@ -14,7 +14,7 @@ const AddProducts = ({user}) => {
 
   useEffect(()=>{
     if(!user){
-      navigate('/login');
+      navigate('/signup');
     }
   }, [user, navigate]);
 

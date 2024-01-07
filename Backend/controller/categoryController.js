@@ -54,7 +54,7 @@ async function deleteCategory(req, res, next) {
     const category = await Category.findByIdAndDelete(id);
 
     // Delete photo from Firebase Storage
-    const photoRef = ref(storage, note.photoInfo.filename);
+    const photoRef = ref(storage, category.photoInfo.filename);
     await deleteObject(photoRef);
 
     user.category = user.category.filter(
