@@ -36,7 +36,7 @@ function CategoryList({ category, setCategory, isLoading, setIsLoading }) {
       {Array.isArray(category) && category.map((cat) => (
         <li className="flex items-center justify-between p-[7px] bg-[#E6E6E6] rounded-lg" key={cat.id}>
           <div className="flex items-center gap-4 font-bold">
-            <img className="w-12 border border-[green] border-[2px]" src={cat.photoInfo.url} />
+            {/* <img className="w-12 border border-[green] border-[2px]" src={cat.photoInfo.url} /> */}
             <div>{cat.content}</div>
           </div>
           <button

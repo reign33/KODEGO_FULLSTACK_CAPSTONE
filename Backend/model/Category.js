@@ -6,15 +6,15 @@ const categorySchema = new mongoose.Schema({
     minLength: 4,
     required: true,
   },
-  important: Boolean,
+  // important: Boolean,
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
-  photoInfo: {
-    url: String,
-    filename: String,
-  },
+  // photoInfo: {
+  //   url: String,
+  //   filename: String,
+  // },
 });
 
 categorySchema.set("toJSON", {
@@ -25,8 +25,8 @@ categorySchema.set("toJSON", {
   },
 });
 
-const Category = mongoose.model("Category", categorySchema);
+const Categories = mongoose.model("Categories", categorySchema);
 
-export default Category;
+export default Categories;
 
 //npm i bcrypt to transform passwordhash to encrypted type
