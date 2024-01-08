@@ -12,7 +12,20 @@ async function login(credentials) {
   return response.data;
 }
 
+async function getUsers() {
+  const response = await axios.get(baseUrl);
+  return response.data;
+}
+
+async function deleteUser(id) {
+  const response = await axios.delete(`${baseUrl}/${id}`);
+  return response;
+}
+
+
 export default {
   register,
   login,
+  getUsers,
+  deleteUser,
 };
