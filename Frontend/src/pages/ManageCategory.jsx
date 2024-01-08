@@ -173,7 +173,7 @@ const ManageCategory = ({user, isLoading, setIsLoading}) => {
                               color="blue-gray"
                               className="font-normal"
                             >
-                              {String(generateID())}
+                              {data.id}
                             </Typography>
                           </div>
                         </div>

@@ -80,7 +80,7 @@ const TABLE_ROWS = [
   },
 ];
 
-const ManageProducts = ({user}) => {
+const ManageProducts = ({user, isLoading, setIsLoading}) => {
 
   const navigate = useNavigate();
   const navigateTo = () => {

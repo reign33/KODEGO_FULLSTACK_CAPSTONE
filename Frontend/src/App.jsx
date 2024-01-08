@@ -76,7 +76,15 @@ function App() {
           <Route path="/managecategory" element={<ManageCategory 
           user={user} isLoading={isLoading} setIsLoading={setIsLoading} />} />
           <Route path="/addproducts" element={<AddProducts user={user} />} />
-          <Route path="/manageproducts" element={<ManageProducts user={user} />} />
+          
+          <Route 
+          path="/manageproducts" 
+          element={<ManageProducts 
+          user={user}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          />} />
+          
           <Route path="/manageusers" element={<Users user={user} />} />
           <Route path="/reports" element={<Reports user={user} />} />
 
