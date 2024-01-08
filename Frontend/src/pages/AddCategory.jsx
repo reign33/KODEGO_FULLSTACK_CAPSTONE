@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import CategoryList from '../components/CategoryList';
+// import CategoryList from '../components/CategoryList';
 import categoryService from '../services/categoryService';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { useNavigate } from 'react-router-dom';
@@ -14,7 +14,7 @@ import {
 const AddCategory = ({user, isLoading, setIsLoading}) => {
   const [category, setCategory] = useState([]);
   const [newCategory, setNewCategory] = useState("");
-  const [newFile, setNewFile] = useState(null);
+  // const [newFile, setNewFile] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -23,14 +23,14 @@ const AddCategory = ({user, isLoading, setIsLoading}) => {
     setIsLoading(true);
   
     const categoryFormData = new FormData();
-    categoryFormData.append("image", newFile);
+    // categoryFormData.append("image", newFile);
     categoryFormData.append("content", newCategory);
   
     categoryService
       .createCategory(categoryFormData)
       .then((res) => {
         setCategory(category.concat(res));
-        setNewFile(null);
+        // setNewFile(null);
         setNewCategory("");
       })
       .catch((error) => console.log(error))
@@ -68,13 +68,13 @@ const AddCategory = ({user, isLoading, setIsLoading}) => {
                 Product Category
               </Typography>
 
-            <div>
+            {/* <div>
               <input
               type="file"
               accept="image/*"
               onChange={(e) => setNewFile(e.target.files[0])}
               />
-            </div>
+            </div> */}
 
               <Input
                 type='text'
@@ -92,14 +92,14 @@ const AddCategory = ({user, isLoading, setIsLoading}) => {
             </Button>
           </form>
 
-          {user && (
+          {/* {user && (
         <CategoryList
           category={category}
           setCategory={setCategory}
           isLoading={isLoading}
           setIsLoading={setIsLoading}
         />
-      )}
+      )} */}
         </Card>
       </div>
   )
