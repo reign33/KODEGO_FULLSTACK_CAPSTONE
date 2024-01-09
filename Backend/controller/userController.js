@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../model/User.js";
+import Categories from "../model/Category.js";
 import config from "../utils/config.js";
 
 async function getUsers(req, res) {
@@ -58,8 +59,28 @@ async function loginUser(req, res, next) {
   
 } 
 
+
+async function deleteUser(req, res, next) {
+  const id = req.params.id;
+  try {
+    const user = await User.findById(id);
+    const categoryIds = user.category;
+
+    // Step 2: Delete the user document
+    await User.findByIdAndDelete(id);
+
+    // Step 3: Delete the associated categories
+    await Categories.deleteMany({ _id: { $in: categoryIds } });
+
+    return res.status(204).end();
+  } catch (error) {
+    next(error);
+  }
+}
+
 export default {
   createUser,
   getUsers,
   loginUser,
+  deleteUser,
 };
