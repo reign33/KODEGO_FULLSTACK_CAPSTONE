@@ -42,6 +42,7 @@ const TABLE_HEAD = ["No.", "Category", "Action"];
 const ManageCategory = ({user, isLoading, setIsLoading}) => {
 
   const [cat, setCat] = useState([]);
+  const [newEdit, setNewEdit] = useState("");
   const navigate = useNavigate();
 
    const generateID = () => {
@@ -75,8 +76,8 @@ const ManageCategory = ({user, isLoading, setIsLoading}) => {
   }, []);
 
   const handleDelete = (id) => {
+    e.preventDefault();
     setIsLoading(true);
-
     categoryService
       .deleteCategory(id)
       .then((_) => {
@@ -85,6 +86,26 @@ const ManageCategory = ({user, isLoading, setIsLoading}) => {
       .catch((error) => console.log(error))
       .finally(() => setIsLoading(false));
   };
+
+
+//handleEdit sa save button ilalagay
+//sa input onChange={(e)=>setNewEdit(e.target.value)}
+  const handleEdit = (id) => {
+    e.preventDefault();
+    setIsLoading(true);
+    const editCatData = new FormData();
+    editCatData.append("content", newEdit);
+    categoryService
+      .editCategory(id, editCatData)
+      .then((res) => {
+        setCat(cat.concat(res));
+        setNewEdit("");
+      })
+      .catch((error) => console.log(error))
+      .finally(() => setIsLoading(false));
+  };
+
+
 
   if (isLoading === true) {
     return (

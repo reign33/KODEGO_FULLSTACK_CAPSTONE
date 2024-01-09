@@ -34,9 +34,24 @@ async function deleteCategory(id) {
   return response;
 }
 
+async function editCategory(id, editCatData) {
+  const config = {
+    headers: { Authorization: token },
+  };
+
+  try {
+    const response = await axios.put(`${baseUrl}/${id}`, editCatData, config);
+    return response.data; // Assuming the server returns the updated category data
+  } catch (error) {
+    console.error("Error editing category:", error);
+    throw error;
+  }
+}
+
 export default {
   setToken,
   getCategories,
   createCategory,
   deleteCategory,
+  editCategory,
 };
