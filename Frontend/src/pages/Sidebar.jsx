@@ -13,10 +13,12 @@ import {
 import {
   PresentationChartBarIcon,
   ShoppingBagIcon,
-  UserCircleIcon,
+  UsersIcon,
   Cog6ToothIcon,
   InboxIcon,
   PowerIcon,
+  AdjustmentsHorizontalIcon,
+  TagIcon,
 } from "@heroicons/react/24/solid";
 import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 
@@ -57,7 +59,7 @@ const Sidebar = () => {
                 <ListItem className="p-0" selected={open === 1}>
                 <AccordionHeader onClick={() => handleOpen(1)} className="border-b-0 p-3">
                     <ListItemPrefix>
-                    <ShoppingBagIcon className="h-5 w-5" />
+                    <TagIcon className="h-5 w-5" />
                     </ListItemPrefix>
                     <Typography color="blue-gray" className="mr-auto font-normal">
                     Category
@@ -97,7 +99,7 @@ const Sidebar = () => {
                 <ListItem className="p-0" selected={open === 2}>
                 <AccordionHeader onClick={() => handleOpen(2)} className="border-b-0 p-3">
                     <ListItemPrefix>
-                    <ShoppingBagIcon className="h-5 w-5" />
+                    <AdjustmentsHorizontalIcon className="h-5 w-5" />
                     </ListItemPrefix>
                     <Typography color="blue-gray" className="mr-auto font-normal">
                     Units
@@ -168,7 +170,7 @@ const Sidebar = () => {
             <NavLink to="/manageusers">
             <ListItem>
                 <ListItemPrefix>
-                <InboxIcon className="h-5 w-5" />
+                <UsersIcon className="h-5 w-5" />
                 </ListItemPrefix>
                 Users Management
             </ListItem>
@@ -176,7 +178,7 @@ const Sidebar = () => {
             <NavLink to="/reports">
             <ListItem>
                 <ListItemPrefix>
-                <UserCircleIcon className="h-5 w-5" />
+                <InboxIcon className="h-5 w-5" />
                 </ListItemPrefix>
                 Reports
             </ListItem>
