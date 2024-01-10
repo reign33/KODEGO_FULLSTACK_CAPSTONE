@@ -1,76 +1,86 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
+import userService from '../services/userService';
 import { useNavigate } from 'react-router-dom';
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { PencilIcon,TrashIcon, UserPlusIcon } from "@heroicons/react/24/solid";
+import { TrashIcon } from "@heroicons/react/24/solid";
+import LoadingSpinner from '../components/LoadingSpinner';
+
 import {
   Card,
-  CardHeader,
-  Input,
   Typography,
   Button,
   CardBody,
-  Chip,
   CardFooter,
-  Tabs,
-  TabsHeader,
-  Tab,
-  Avatar,
-  IconButton,
   Tooltip,
 } from "@material-tailwind/react";
 
-const TABS = [
-  {
-    label: "All",
-    value: "all",
-  },
-  {
-    label: "Monitored",
-    value: "monitored",
-  },
-  {
-    label: "Unmonitored",
-    value: "unmonitored",
-  },
-];
  
 const TABLE_HEAD = ["No.", "Email", "Action"];
  
-const TABLE_ROWS = [
-  {
-    Number: "1",
-    email: "email@baskog.com",
-  },
-  {
-    Number: "2",
-    email: "email@baskog.com",
-  },
-  {
-    Number: "3",
-    email: "email@baskog.com",
-  },
-  {
-    Number: "4",
-    email: "email@baskog.com",
-  },
-  {
-    Number: "5",
-    email: "email@baskog.com",
-  },
-];
 
-const Users = ({user}) => {
+// const TABLE_ROWS = [
+//   {
+//     Number: "1",
+//     email: "email@baskog.com",
+//   },
+//   {
+//     Number: "2",
+//     email: "email@baskog.com",
+//   },
+//   {
+//     Number: "3",
+//     email: "email@baskog.com",
+//   },
+//   {
+//     Number: "4",
+//     email: "email@baskog.com",
+//   },
+// ];
+
+const Users = ({user, isLoading, setIsLoading}) => {
+  const [users, setUsers] = useState([]);
 
   const navigate = useNavigate();
-  const navigateTo = () => {
-    navigate('/addcategory');
-  };
 
   useEffect(()=>{
     if(!user){
       navigate('/signup');
     }
   }, [user, navigate]);
+
+  const fetchData = async () => {
+    try {
+      const res = await userService.getUsers();
+      setUsers(res);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const handleDelete = (id) => {
+    setIsLoading(true);
+
+    userService
+      .deleteUser(id)
+      .then((_) => {
+        setUsers(users.filter((cat) => cat.id !== id));
+      })
+      .catch((error) => console.log(error))
+      .finally(() => setIsLoading(false));
+  };
+
+  if (isLoading === true) {
+    return (
+      <div className="flex justify-center items-center h-screen p-4">
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   return (
       <div className='flex flex-wrap justify-start w-full p-4'>
@@ -97,15 +107,16 @@ const Users = ({user}) => {
               </tr>
             </thead>
             <tbody>
-              {TABLE_ROWS.map(
-                ({ Number, email }, index) => {
-                  const isLast = index === TABLE_ROWS.length - 1;
+            {/* Array.isArray(users) && */}
+              {users.map(
+                (data) => {
+                  const isLast = data.length > 0? Math.max(...data.map(n=>n.id))+1:0;
                   const classes = isLast
                     ? "p-4 "
                     : "p-4 border-b border-blue-gray-50";
   
                   return (
-                    <tr key={Number}>
+                    <tr key={data.id}>
                       <td className={classes}>
                         <div className="flex items-center gap-3 pr-60">
                           <div className="flex flex-col text-center">
@@ -114,7 +125,7 @@ const Users = ({user}) => {
                               color="blue-gray"
                               className="font-normal"
                             >
-                              {Number}
+                              {data.id}
                             </Typography>
                           </div>
                         </div>
@@ -127,7 +138,7 @@ const Users = ({user}) => {
                               color="blue-gray"
                               className="font-normal"
                             >
-                              {email}
+                              {data.username}
                             </Typography>
                           </div>
                         </div>
@@ -135,8 +146,8 @@ const Users = ({user}) => {
                       <td className={classes}>
                         <div className="flex gap-3">
                           <Tooltip content="Delete Product">
-                            <Button className="flex gap-1" color="red">
-                              <PencilIcon className="h-4 w-4" />
+                            <Button onClick={() => handleDelete(data.id)} className="flex gap-1" color="red">
+                              <TrashIcon className="h-4 w-4" />
                                 Delete
                             </Button>
                           </Tooltip>

@@ -85,16 +85,21 @@ function App() {
           setIsLoading={setIsLoading}
           />} />
           
-          <Route path="/manageusers" element={<Users user={user} />} />
-          <Route path="/reports" element={<Reports user={user} />} />
+          <Route 
+          path="/manageusers" 
+          element={<Users 
+          user={user}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading} 
+          />} />
 
+          <Route path="/reports" element={<Reports user={user} />} />
           <Route path="*" element={<Navigate to="/login"/>} />
         
       </Routes>
     </div>
   </div>
-      
- 
+       
   );
 }
 
