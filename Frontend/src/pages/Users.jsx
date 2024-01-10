@@ -53,6 +53,10 @@ const TABLE_ROWS = [
     Number: "4",
     email: "email@baskog.com",
   },
+  {
+    Number: "5",
+    email: "email@baskog.com",
+  },
 ];
 
 const Users = ({user}) => {
@@ -67,8 +71,6 @@ const Users = ({user}) => {
       navigate('/signup');
     }
   }, [user, navigate]);
-
-  
 
   return (
       <div className='flex flex-wrap justify-start w-full p-4'>
@@ -132,15 +134,9 @@ const Users = ({user}) => {
                       </td>
                       <td className={classes}>
                         <div className="flex gap-3">
-                          {/* <Tooltip content="Edit Product">
-                            <Button className="flex gap-1" color="blue">
-                              <PencilIcon className="h-4 w-4" />
-                                Edit
-                            </Button>
-                          </Tooltip> */}
                           <Tooltip content="Delete Product">
                             <Button className="flex gap-1" color="red">
-                              <TrashIcon className="h-4 w-4" />
+                              <PencilIcon className="h-4 w-4" />
                                 Delete
                             </Button>
                           </Tooltip>
