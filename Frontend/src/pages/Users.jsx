@@ -16,6 +16,7 @@ import {
  
 const TABLE_HEAD = ["No.", "Email", "Action"];
  
+
 // const TABLE_ROWS = [
 //   {
 //     Number: "1",
@@ -144,12 +145,6 @@ const Users = ({user, isLoading, setIsLoading}) => {
                       </td>
                       <td className={classes}>
                         <div className="flex gap-3">
-                          {/* <Tooltip content="Edit Product">
-                            <Button className="flex gap-1" color="blue">
-                              <PencilIcon className="h-4 w-4" />
-                                Edit
-                            </Button>
-                          </Tooltip> */}
                           <Tooltip content="Delete Product">
                             <Button onClick={() => handleDelete(data.id)} className="flex gap-1" color="red">
                               <TrashIcon className="h-4 w-4" />

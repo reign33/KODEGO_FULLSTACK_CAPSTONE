@@ -12,12 +12,19 @@ import {
   Typography,
   Button,
   CardBody,
-  Chip,
   CardFooter,
   Tabs,
   TabsHeader,
   Tab,
   Tooltip,
+} from "@material-tailwind/react";
+
+// dialog edit
+import {
+  Dialog,
+  DialogHeader,
+  DialogBody,
+  DialogFooter,
 } from "@material-tailwind/react";
  
 const TABS = [
@@ -73,6 +80,9 @@ const ManageUnit = ({user}) => {
     }
   }, [user, navigate]);
 
+  // dialog edit
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(!open);
 
   return (
       <div className='flex justify-start w-full p-4'>
@@ -144,35 +154,40 @@ const ManageUnit = ({user}) => {
 
                       return (
                         <tr key={Number}>
-                           <td className={classes}>
-                        <div className="flex items-center gap-3 pr-60">
-                          <div className="flex flex-col text-center">
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-normal"
-                            >
-                              {Number}
-                            </Typography>
-                          </div>
-                        </div>
-                      </td>
+                            <td className={classes}>
+                              <div className="flex items-center gap-3 pr-60">
+                                <div className="flex flex-col text-center">
+                                  <Typography
+                                    variant="small"
+                                    color="blue-gray"
+                                    className="font-normal"
+                                  >
+                                    {Number}
+                                  </Typography>
+                                </div>
+                              </div>
+                            </td>
                           <td className={classes}>
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-normal"
-                            >
-                              {units}
-                            </Typography>
+                            <div className="flex items-center gap-3 pr-60">
+                              <div className="flex flex-col text-center">
+                                <Typography
+                                  variant="small"
+                                  color="blue-gray"
+                                  className="font-normal"
+                                >
+                                  {units}
+                                </Typography>
+                              </div>
+                            </div>
+
                           </td>
                           <td className={classes}>
                             <div className="flex gap-4">
                               <Tooltip content="Edit Product">
-                                <Button className="flex gap-1" color="blue">
-                                  <PencilIcon className="h-4 w-4" />
-                                  Edit
-                                </Button>
+                              <Button className="flex gap-1" color="blue" onClick={handleOpen}>
+                              <PencilIcon className="h-4 w-4" />
+                                Edit
+                              </Button>
                               </Tooltip>
                               <Tooltip content="Delete Product">
                                 <Button className="flex gap-1" color="red">
@@ -203,6 +218,49 @@ const ManageUnit = ({user}) => {
           </div>
         </CardFooter>
       </Card>
+
+      <Dialog open={open} size="xs" handler={handleOpen}>
+        <div className="flex items-center justify-between">
+          <DialogHeader className="flex flex-col items-start">
+            {" "}
+            <Typography className="mb-1" variant="h4">
+              Edit Unit
+            </Typography>
+          </DialogHeader>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="mr-3 h-5 w-5"
+            onClick={handleOpen}
+          >
+            <path
+              fillRule="evenodd"
+              d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
+              clipRule="evenodd"
+            />
+          </svg>
+        </div>
+        <DialogBody>
+          <Typography className="mb-10 -mt-7 " color="gray" variant="lead">
+            Edit Unit Category and then click save button.
+          </Typography>
+          <div className="grid gap-6">
+            <Typography className="-mb-1" color="blue-gray" variant="h6">
+              Product Unit
+            </Typography>
+            <Input label="Product Unit" />
+          </div>
+        </DialogBody>
+        <DialogFooter className="space-x-2">
+        <Button variant="gradient" color="gray" onClick={handleOpen}>
+            Save
+          </Button>
+          <Button variant="text" color="gray" onClick={handleOpen}>
+            Cancel
+          </Button>
+        </DialogFooter>
+      </Dialog>
       </div>
   )
 }
