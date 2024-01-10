@@ -3,9 +3,7 @@ import jwt from "jsonwebtoken";
 import getTokenFrom from "../utils/getTokenFrom.js";
 import config from "../utils/config.js";
 import User from "../model/User.js";
-// import uploadFile from "../utils/uploadFile.js";
-// import { deleteObject, ref } from "firebase/storage";
-// import storage from "../utils/firebaseConfig.js";
+
 
 async function getCategoryInfo(_, res, next) {
   try {
@@ -53,10 +51,6 @@ async function deleteCategory(req, res, next) {
     const user = await User.findById(decodedToken.id);
     const category = await Categories.findByIdAndDelete(id);
 
-    // Delete photo from Firebase Storage
-    // const photoRef = ref(storage, category.photoInfo.filename);
-    // await deleteObject(photoRef);
-
     user.category = user.category.filter(
       (categoryId) => categoryId.toString() !== category._id.toString()
     );
@@ -70,7 +64,6 @@ async function deleteCategory(req, res, next) {
 
 async function createCategory(req, res, next) {
   const body = req.body;
-  // const file = req.file;
 
   try {
     const decodedToken = jwt.verify(getTokenFrom(req), config.JWT_SECRET);
@@ -85,16 +78,11 @@ async function createCategory(req, res, next) {
       return res.status(400).json({ error: "content missing" });
     }
 
-    // const photoInfo = await uploadFile(file);
-
     const category = new Categories({
       content: body.content.trim(),
-      // important: body.important || false,
       userId: user.id,
-      // photoInfo,
     });
 
-    // const savedCategory = await category.save().then((result) => result);
     const savedCategory = await category.save();
 
     user.category = user.category.concat(savedCategory._id); //sa schema di gumagana ung id kaya _id
