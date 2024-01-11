@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react'
+import ModalCategory from '../components/ModalCategory';
 import LoadingSpinner from '../components/LoadingSpinner';
 import categoryService from '../services/categoryService';
 import { useNavigate } from 'react-router-dom';
@@ -19,13 +20,13 @@ import {
 } from "@material-tailwind/react";
 
 // dialog edit
-import {
-  Dialog,
-  DialogHeader,
-  DialogBody,
-  DialogFooter,
-  Textarea,
-} from "@material-tailwind/react";
+// import {
+//   Dialog,
+//   DialogHeader,
+//   DialogBody,
+//   DialogFooter,
+//   Textarea,
+// } from "@material-tailwind/react";
 
 const TABS = [
   {
@@ -47,18 +48,15 @@ const TABLE_HEAD = ["No.", "Category", "Action"];
 
 const ManageCategory = ({user, isLoading, setIsLoading}) => {
 
+  const [open, setOpen] = useState(false);
+  const [selectCat, setSelectCat] = useState([]);
   const [cat, setCat] = useState([]);
-  const [newEdit, setNewEdit] = useState("");
   const navigate = useNavigate();
 
-   const generateID = () => {
-    const maxId = cat.length > 0 ? Math.max(...cat.map(n =>n.id)) : 0;
-    return maxId + 1;
- };
-
-  const navigateTo = () => {
-    navigate('/addcategory');
-  };
+  const handleOpen = (data) => {
+    setOpen(!open);
+    setSelectCat(data);
+  }
 
   useEffect(()=>{
     if(!user){
@@ -66,52 +64,26 @@ const ManageCategory = ({user, isLoading, setIsLoading}) => {
     }
   }, [user, navigate]);
 
-  const fetchData = async () => {
-    try {
-      const res = await categoryService.getCategories();
-      setCat(res);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
-    fetchData();
+    categoryService.getCategories().then((res) => {
+      setCat(res);
+    });
   }, []);
 
+  const navigateTo = () => {
+    navigate('/addcategory');
+  };
+
   const handleDelete = (id) => {
-    e.preventDefault();
     setIsLoading(true);
     categoryService
       .deleteCategory(id)
       .then((_) => {
-        setCat(cat.filter((cat) => cat.id !== id));
+        setCat((PrevCat)=>PrevCat.filter((cat) => cat.id !== id));
       })
       .catch((error) => console.log(error))
       .finally(() => setIsLoading(false));
   };
-
-
-//handleEdit sa save button ilalagay
-//sa input onChange={(e)=>setNewEdit(e.target.value)}
-  const handleEdit = (id) => {
-    e.preventDefault();
-    setIsLoading(true);
-    const editCatData = new FormData();
-    editCatData.append("content", newEdit);
-    categoryService
-      .editCategory(id, editCatData)
-      .then((res) => {
-        setCat(cat.concat(res));
-        setNewEdit("");
-      })
-      .catch((error) => console.log(error))
-      .finally(() => setIsLoading(false));
-  };
-
-
 
   if (isLoading === true) {
     return (
@@ -120,10 +92,7 @@ const ManageCategory = ({user, isLoading, setIsLoading}) => {
       </div>
     );
   }
-
-    // dialog edit
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(!open);
+    
  
   return (
       <div className='flex flex-wrap justify-start w-full p-4'>
@@ -141,7 +110,6 @@ const ManageCategory = ({user, isLoading, setIsLoading}) => {
                 </Typography>
               </div>
               <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-                
                 <Button className="flex items-center gap-3" size="sm" onClick={navigateTo}>
                   <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add Category
                 </Button>
@@ -187,19 +155,17 @@ const ManageCategory = ({user, isLoading, setIsLoading}) => {
             </thead>
             <tbody>
               {Array.isArray(cat) && cat.map(
-                (data) => {
-                  
-                  const isLast = cat.length > 0? Math.max(...cat.map(n=>n.id))+1:0;
-                  const classes = isLast
+                (data, index) => {
+                  const isLast = index === cat.length - 1; 
+                  const classes = index === isLast
                     ? "p-4 "
                     : "p-4 border-b border-blue-gray-50";
-  
                   return (
                     <tr key={data.id}>
                       <td className={classes}>
-                        <div className="flex items-center gap-3 pr-60">
+                        <div  key={data.id} className="flex items-center gap-3 pr-60">
                           <div className="flex flex-col text-center">
-                            <Typography
+                            <Typography key={data.id}
                               variant="small"
                               color="blue-gray"
                               className="font-normal"
@@ -210,7 +176,7 @@ const ManageCategory = ({user, isLoading, setIsLoading}) => {
                         </div>
                       </td>
                       <td className={classes}>
-                        <div className="flex items-center gap-3 pr-60">
+                        <div  key={data.id} className="flex items-center gap-3 pr-60">
                           <div className="flex flex-col text-center">
                             <Typography
                               variant="small"
@@ -223,15 +189,18 @@ const ManageCategory = ({user, isLoading, setIsLoading}) => {
                         </div>
                       </td>
                       <td className={classes}>
-                        <div className="flex gap-3">
+                        <div  key={data.id} className="flex gap-3">
+
                           <Tooltip content="Edit Product">
-                            <Button className="flex gap-1" color="blue" onClick={handleOpen}>
+                            <Button key={data.id} className="flex gap-1" color="blue" 
+                            onClick={()=>handleOpen(data)}
+                            >
                               <PencilIcon className="h-4 w-4" />
                                 Edit
                             </Button>
                           </Tooltip>
                           <Tooltip content="Delete Product">
-                            <Button onClick={() => handleDelete(data.id)} className="flex gap-1" color="red">
+                            <Button key={data.id} onClick={() =>handleDelete(data.id)} className="flex gap-1" color="red">
                               <TrashIcon className="h-4 w-4" />
                                 Delete
                             </Button>
@@ -245,6 +214,7 @@ const ManageCategory = ({user, isLoading, setIsLoading}) => {
             </tbody>
           </table>
         </CardBody>
+
         <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
           <Typography variant="small" color="blue-gray" className="font-normal">
             Page 1 of 10
@@ -260,48 +230,17 @@ const ManageCategory = ({user, isLoading, setIsLoading}) => {
         </CardFooter>
       </Card>
 
-      <Dialog open={open} size="xs" handler={handleOpen}>
-        <div className="flex items-center justify-between">
-          <DialogHeader className="flex flex-col items-start">
-            {" "}
-            <Typography className="mb-1" variant="h4">
-              Edit Category
-            </Typography>
-          </DialogHeader>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            className="mr-3 h-5 w-5"
-            onClick={handleOpen}
-          >
-            <path
-              fillRule="evenodd"
-              d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
-              clipRule="evenodd"
-            />
-          </svg>
-        </div>
-        <DialogBody>
-          <Typography className="mb-10 -mt-7 " color="gray" variant="lead">
-            Edit Product Category and then click save button.
-          </Typography>
-          <div className="grid gap-6">
-            <Typography className="-mb-1" color="blue-gray" variant="h6">
-              Product Category
-            </Typography>
-            <Input label="Product Category" />
-          </div>
-        </DialogBody>
-        <DialogFooter className="space-x-2">
-        <Button variant="gradient" color="gray" onClick={handleOpen}>
-            Save
-          </Button>
-          <Button variant="text" color="gray" onClick={handleOpen}>
-            Cancel
-          </Button>
-        </DialogFooter>
-      </Dialog>
+      <ModalCategory 
+        open={open}
+        setOpen ={setOpen} 
+        handleOpen ={handleOpen}
+        selectCat={selectCat}
+        cat={cat}
+        setCat={setCat}
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
+        />
+
       </div>
   )
 }
