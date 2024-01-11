@@ -27,6 +27,7 @@ const AddCategory = ({user, isLoading, setIsLoading}) => {
       .then((res) => {
         // setCategory(category.concat(res));
         setNewCategory("");
+        navigate('/managecategory')
       })
       .catch((error) => console.log(error))
       .finally(() => setIsLoading(false));
