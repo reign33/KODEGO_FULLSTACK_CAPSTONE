@@ -58,15 +58,6 @@ const ManageCategory = ({user, isLoading, setIsLoading}) => {
     setSelectCat(data);
   }
 
-   const generateID = () => {
-    const maxId = cat.length > 0 ? Math.max(...cat.map(n =>n.id)) : 0;
-    return maxId + 1;
- };
-
-  const navigateTo = () => {
-    navigate('/addcategory');
-  };
-
   useEffect(()=>{
     if(!user){
       navigate('/signup');
@@ -79,7 +70,9 @@ const ManageCategory = ({user, isLoading, setIsLoading}) => {
     });
   }, []);
 
-
+  const navigateTo = () => {
+    navigate('/addcategory');
+  };
 
   const handleDelete = (id) => {
     setIsLoading(true);
@@ -117,7 +110,6 @@ const ManageCategory = ({user, isLoading, setIsLoading}) => {
                 </Typography>
               </div>
               <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-                
                 <Button className="flex items-center gap-3" size="sm" onClick={navigateTo}>
                   <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add Category
                 </Button>
@@ -173,7 +165,7 @@ const ManageCategory = ({user, isLoading, setIsLoading}) => {
                       <td className={classes}>
                         <div  key={data.id} className="flex items-center gap-3 pr-60">
                           <div className="flex flex-col text-center">
-                            <Typography
+                            <Typography key={data.id}
                               variant="small"
                               color="blue-gray"
                               className="font-normal"
@@ -200,7 +192,7 @@ const ManageCategory = ({user, isLoading, setIsLoading}) => {
                         <div  key={data.id} className="flex gap-3">
 
                           <Tooltip content="Edit Product">
-                            <Button className="flex gap-1" color="blue" 
+                            <Button key={data.id} className="flex gap-1" color="blue" 
                             onClick={()=>handleOpen(data)}
                             >
                               <PencilIcon className="h-4 w-4" />
@@ -208,7 +200,7 @@ const ManageCategory = ({user, isLoading, setIsLoading}) => {
                             </Button>
                           </Tooltip>
                           <Tooltip content="Delete Product">
-                            <Button onClick={() =>handleDelete(data.id)} className="flex gap-1" color="red">
+                            <Button key={data.id} onClick={() =>handleDelete(data.id)} className="flex gap-1" color="red">
                               <TrashIcon className="h-4 w-4" />
                                 Delete
                             </Button>
