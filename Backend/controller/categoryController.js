@@ -22,7 +22,6 @@ async function getCategories(req, res, next) {
       "userId",
       {
         username: 1,
-        // name: 1,
       }
     );
     return res.json(category);

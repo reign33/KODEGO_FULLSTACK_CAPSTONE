@@ -12,7 +12,7 @@ import {
   DialogFooter,
   } from "@material-tailwind/react";
 
-const ModalCategory = ({open, setOpen, handleOpen, cat, setCat, selectCat, isLoading, setIsLoading}) => {
+const ModalCategory = ({open, setOpen, handleOpen, cat, setCat, selectCat, setSelectCat, isLoading, setIsLoading}) => {
     const [newEdit, setNewEdit] = useState("");
 
     useEffect(() => {
@@ -21,8 +21,6 @@ const ModalCategory = ({open, setOpen, handleOpen, cat, setCat, selectCat, isLoa
         });
       }, []);
 
-    //handleEdit sa save button ilalagay
-//sa input onChange={(e)=>setNewEdit(e.target.value)}
   const handleEdit = (id) => {
     setIsLoading(true);
     const editCatData = new FormData();
@@ -32,6 +30,7 @@ const ModalCategory = ({open, setOpen, handleOpen, cat, setCat, selectCat, isLoa
       .then((res) => {
         setCat(cat.concat(res));
         setNewEdit("");
+        setSelectCat({id, content: newEdit});
       })
       .catch((error) => console.log(error))
       .finally(() =>{
@@ -42,7 +41,7 @@ const ModalCategory = ({open, setOpen, handleOpen, cat, setCat, selectCat, isLoa
 
   if (isLoading === true) {
     return (
-      <div className="flex justify-center items-center h-screen p-4">
+      <div className="flex justify-center items-center">
         <LoadingSpinner />
       </div>
     );
@@ -80,12 +79,12 @@ const ModalCategory = ({open, setOpen, handleOpen, cat, setCat, selectCat, isLoa
     <Typography className="-mb-1" color="blue-gray" variant="h6">
       Product Category
     </Typography>
-    <Input type="text" value={newEdit} onChange={(e)=>setNewEdit(e.target.value)} label={selectCat.content} />
+    <Input type="text" onChange={(e)=>setNewEdit(e.target.value)} label={selectCat.content} />
     </div>
     </DialogBody>
     <DialogFooter className="space-x-2">
-    <Button variant="gradient" color="gray" onClick={handleOpen}>
-    <div onClick={()=>handleEdit(selectCat.id)}> Save</div>
+    <Button variant="gradient" color="gray" onClick={()=>handleEdit(selectCat.id)}>
+    <div>Save</div>
     </Button>
     <Button variant="text" color="gray" onClick={handleOpen}>
     Cancel

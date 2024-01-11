@@ -19,15 +19,6 @@ import {
   Tooltip,
 } from "@material-tailwind/react";
 
-// dialog edit
-// import {
-//   Dialog,
-//   DialogHeader,
-//   DialogBody,
-//   DialogFooter,
-//   Textarea,
-// } from "@material-tailwind/react";
-
 const TABS = [
   {
     label: "All",
@@ -49,13 +40,13 @@ const TABLE_HEAD = ["No.", "Category", "Action"];
 const ManageCategory = ({user, isLoading, setIsLoading}) => {
 
   const [open, setOpen] = useState(false);
-  const [selectCat, setSelectCat] = useState([]);
-  const [cat, setCat] = useState([]);
+  const [selectCat, setSelectCat] = useState([]); //need pass to modal
+  const [cat, setCat] = useState([]); //storage of database
   const navigate = useNavigate();
 
-  const handleOpen = (data) => {
+  const handleOpen = (id, content) => {
     setOpen(!open);
-    setSelectCat(data);
+    setSelectCat({id, content});
   }
 
   useEffect(()=>{
@@ -154,7 +145,8 @@ const ManageCategory = ({user, isLoading, setIsLoading}) => {
               </tr>
             </thead>
             <tbody>
-              {Array.isArray(cat) && cat.map(
+            {/* {Array.isArray(cat) &&  */}
+              {cat.map(
                 (data, index) => {
                   const isLast = index === cat.length - 1; 
                   const classes = index === isLast
@@ -163,9 +155,10 @@ const ManageCategory = ({user, isLoading, setIsLoading}) => {
                   return (
                     <tr key={data.id}>
                       <td className={classes}>
-                        <div  key={data.id} className="flex items-center gap-3 pr-60">
+                        <div className="flex items-center gap-3 pr-60">
                           <div className="flex flex-col text-center">
-                            <Typography key={data.id}
+                            <Typography
+                            key={data.id}
                               variant="small"
                               color="blue-gray"
                               className="font-normal"
@@ -176,9 +169,9 @@ const ManageCategory = ({user, isLoading, setIsLoading}) => {
                         </div>
                       </td>
                       <td className={classes}>
-                        <div  key={data.id} className="flex items-center gap-3 pr-60">
+                        <div className="flex items-center gap-3 pr-60">
                           <div className="flex flex-col text-center">
-                            <Typography
+                            <Typography key={data.id}
                               variant="small"
                               color="blue-gray"
                               className="font-normal"
@@ -189,18 +182,18 @@ const ManageCategory = ({user, isLoading, setIsLoading}) => {
                         </div>
                       </td>
                       <td className={classes}>
-                        <div  key={data.id} className="flex gap-3">
+                        <div className="flex gap-3">
 
                           <Tooltip content="Edit Product">
-                            <Button key={data.id} className="flex gap-1" color="blue" 
-                            onClick={()=>handleOpen(data)}
+                            <Button className="flex gap-1" color="blue" 
+                            onClick={()=>handleOpen(data.id, data.content)}
                             >
                               <PencilIcon className="h-4 w-4" />
                                 Edit
                             </Button>
                           </Tooltip>
                           <Tooltip content="Delete Product">
-                            <Button key={data.id} onClick={() =>handleDelete(data.id)} className="flex gap-1" color="red">
+                            <Button onClick={() =>handleDelete(data.id)} className="flex gap-1" color="red">
                               <TrashIcon className="h-4 w-4" />
                                 Delete
                             </Button>
@@ -237,6 +230,7 @@ const ManageCategory = ({user, isLoading, setIsLoading}) => {
         selectCat={selectCat}
         cat={cat}
         setCat={setCat}
+        setSelectCat={setSelectCat}
         isLoading={isLoading}
         setIsLoading={setIsLoading}
         />

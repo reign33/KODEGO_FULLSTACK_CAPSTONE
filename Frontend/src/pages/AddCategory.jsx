@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react'
-// import CategoryList from '../components/CategoryList';
 import categoryService from '../services/categoryService';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { useNavigate } from 'react-router-dom';
@@ -12,9 +11,7 @@ import {
 
 
 const AddCategory = ({user, isLoading, setIsLoading}) => {
-  const [category, setCategory] = useState([]);
-  const [newCategory, setNewCategory] = useState("");
-  // const [newFile, setNewFile] = useState(null);
+  const [newCategory, setNewCategory] = useState(""); //hook for input
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -23,14 +20,12 @@ const AddCategory = ({user, isLoading, setIsLoading}) => {
     setIsLoading(true);
   
     const categoryFormData = new FormData();
-    // categoryFormData.append("image", newFile);
     categoryFormData.append("content", newCategory);
   
     categoryService
       .createCategory(categoryFormData)
       .then((res) => {
-        setCategory(category.concat(res));
-        // setNewFile(null);
+        // setCategory(category.concat(res));
         setNewCategory("");
       })
       .catch((error) => console.log(error))
@@ -68,14 +63,6 @@ const AddCategory = ({user, isLoading, setIsLoading}) => {
                 Product Category
               </Typography>
 
-            {/* <div>
-              <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => setNewFile(e.target.files[0])}
-              />
-            </div> */}
-
               <Input
                 type='text'
                 value={newCategory}
@@ -91,15 +78,6 @@ const AddCategory = ({user, isLoading, setIsLoading}) => {
               Add Product Category
             </Button>
           </form>
-
-          {/* {user && (
-        <CategoryList
-          category={category}
-          setCategory={setCategory}
-          isLoading={isLoading}
-          setIsLoading={setIsLoading}
-        />
-      )} */}
         </Card>
       </div>
   )
