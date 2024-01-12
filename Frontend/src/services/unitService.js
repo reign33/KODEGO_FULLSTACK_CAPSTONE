@@ -16,13 +16,14 @@ async function getUnits() {
   return response.data;
 }
 
-async function createUnit(unitFormData) {
+async function createUnit(newAddUnit) {
   const config = {
     headers: { Authorization: token },
   };
 
-  const response = await axios.post(baseUrl, unitFormData, config);
-  return response.data;
+  const res = await axios.post(baseUrl, newAddUnit, config);
+  return res.data;
+
 }
 
 async function deleteUnit(id) {

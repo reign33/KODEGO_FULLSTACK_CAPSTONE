@@ -97,7 +97,7 @@ async function updateUnit(req, res, next) {
   const id = req.params.id;
   const { content } = req.body;
   const unit = {
-    content
+    content,
   };
 
   try {

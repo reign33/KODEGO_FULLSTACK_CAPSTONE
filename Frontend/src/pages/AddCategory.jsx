@@ -11,22 +11,18 @@ import {
 
 
 const AddCategory = ({user, isLoading, setIsLoading}) => {
-  const [category, setCategory]= useState([]);
-  const [newCategory, setNewCategory] = useState(""); //hook for input
+  const [newCategory, setNewCategory] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  
     setIsLoading(true);
-  
-    const categoryForm = new FormData();
-    categoryForm.append("content", newCategory);
-  
+  const newlyAddedCategory = { content: newCategory };
+
     categoryService
-      .createCategory(categoryForm)
+      .createCategory(newlyAddedCategory)
       .then((res) => {
-        setCategory(category.concat(res));
+        setNewCategory("");
       })
       .catch((error) => console.log(error))
       .finally(() => setIsLoading(false));

@@ -1,4 +1,6 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
+import LoadingSpinner from '../components/LoadingSpinner';
+import unitService from '../services/unitService';
 import { useNavigate } from 'react-router-dom';
 import {
   Card,
@@ -7,14 +9,37 @@ import {
   Typography,
 } from "@material-tailwind/react";
 
-const AddUnit = ({user}) => {
+const AddUnit = ({user, isLoading, setIsLoading}) => {
+  const [newUnit, setNewUnit] = useState("");
   const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    const addnewUnit = { content: newUnit };
+    
+    unitService
+    .createUnit(addnewUnit)
+    .then((res) => {
+        setNewUnit("");
+      })
+      .catch((error) => console.log(error))
+      .finally(() => setIsLoading(false));
+  };
 
   useEffect(()=>{
     if(!user){
       navigate('/signup');
     }
   }, [user, navigate]);
+
+  if (isLoading === true) {
+    return (
+      <div className="flex flex-col justify-center items-center h-screen p-4">
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   return (
       <div className='flex flex-wrap justify-start w-full p-4'>
@@ -25,12 +50,17 @@ const AddUnit = ({user}) => {
           <Typography color="gray" className="mt-1 font-normal">
             use this form to add product unit to database.
           </Typography>
-          <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
+          <form 
+          onSubmit={handleSubmit}
+          className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
             <div className="mb-1 flex flex-col gap-6">
               <Typography variant="h6" color="blue-gray" className="-mb-3">
                 Product Unit
               </Typography>
               <Input
+              type='text'
+              value={newUnit}
+              onChange={(e)=>setNewUnit(e.target.value)}
                 size="lg"
                 className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
                 labelProps={{
@@ -38,7 +68,7 @@ const AddUnit = ({user}) => {
                 }}
               />
             </div>
-            <Button className="mt-6" fullWidth>
+            <Button type='submit' className="mt-6" fullWidth>
               Add Product Unit
             </Button>
           </form>
@@ -47,4 +77,4 @@ const AddUnit = ({user}) => {
   )
 }
 
-export default AddUnit
+export default AddUnit;

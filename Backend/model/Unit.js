@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const unitSchema = new mongoose.Schema({
   content: {
     type: String,
-    minLength: 3,
+    minLength: 4,
     required: true,
   },
   userId: {

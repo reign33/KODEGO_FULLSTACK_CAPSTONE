@@ -6,15 +6,10 @@ const categorySchema = new mongoose.Schema({
     minLength: 4,
     required: true,
   },
-  // important: Boolean,
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
-  // photoInfo: {
-  //   url: String,
-  //   filename: String,
-  // },
 });
 
 categorySchema.set("toJSON", {

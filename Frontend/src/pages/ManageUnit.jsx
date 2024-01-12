@@ -1,4 +1,7 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
+import ModalUnit from '../components/ModalUnit';
+import LoadingSpinner from '../components/LoadingSpinner';
+import unitService from '../services/unitService';
 import { useNavigate } from 'react-router-dom';
 import {
   MagnifyingGlassIcon,
@@ -18,14 +21,6 @@ import {
   Tab,
   Tooltip,
 } from "@material-tailwind/react";
-
-// dialog edit
-import {
-  Dialog,
-  DialogHeader,
-  DialogBody,
-  DialogFooter,
-} from "@material-tailwind/react";
  
 const TABS = [
   {
@@ -44,35 +39,12 @@ const TABS = [
  
 const TABLE_HEAD = ["No.", "Units", "Action"];
  
-const TABLE_ROWS = [
-  {
-    Number: "1",
-    units: "pcs",
-  },
-  {
-    Number: "2",
-    units: "pcs",
-  },
-  {
-    Number: "3",
-    units: "pcs",
-  },
-  {
-    Number: "4",
-    units: "pcs",
-  },
-  {
-    Number: "5",
-    units: "pcs",
-  },
-];
 
-const ManageUnit = ({user}) => {
-
+const ManageUnit = ({user, isLoading, setIsLoading}) => {
+  const [open, setOpen] = useState(false);
+  const [selectCat, setSelectCat] = useState([]); //need pass to modal
+  const [cat, setCat] = useState([]); //storage of database
   const navigate = useNavigate();
-  const navigateTo = () => {
-    navigate('/addunit');
-  };
 
   useEffect(()=>{
     if(!user){
@@ -80,9 +52,39 @@ const ManageUnit = ({user}) => {
     }
   }, [user, navigate]);
 
-  // dialog edit
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(!open);
+  useEffect(() => {
+    unitService.getUnits().then((res) => {
+      setCat(res);
+    });
+  }, []);
+
+  const navigateTo = () => {
+    navigate('/addunit');
+  };
+
+  const handleDelete = (id) => {
+    setIsLoading(true);
+    unitService
+      .deleteUnit(id)
+      .then((_) => {
+        setCat((PrevCat)=>PrevCat.filter((cat) => cat.id !== id));
+      })
+      .catch((error) => console.log(error))
+      .finally(() => setIsLoading(false));
+  };
+
+  if (isLoading === true) {
+    return (
+      <div className="flex justify-center items-center h-screen p-4">
+        <LoadingSpinner />
+      </div>
+    );
+  }
+
+  const handleOpen = (id, content) => {
+    setOpen(!open);
+    setSelectCat({id, content});
+  }
 
   return (
       <div className='flex justify-start w-full p-4'>
@@ -144,16 +146,18 @@ const ManageUnit = ({user}) => {
                     ))}
                   </tr>
                 </thead>
+
+
                 <tbody>
-                  {TABLE_ROWS.map(
-                    ({ Number, units }, index) => {
-                      const isLast = index === TABLE_ROWS.length - 1;
+                  {Array.isArray(cat) && cat.map(
+                    (data, index) => {
+                      const isLast = index === cat.length - 1;
                       const classes = isLast
                         ? "p-4"
                         : "p-4 border-b border-blue-gray-50";
 
                       return (
-                        <tr key={Number}>
+                        <tr key={data.id}>
                             <td className={classes}>
                               <div className="flex items-center gap-3 pr-60">
                                 <div className="flex flex-col text-center">
@@ -162,7 +166,7 @@ const ManageUnit = ({user}) => {
                                     color="blue-gray"
                                     className="font-normal"
                                   >
-                                    {Number}
+                                    {data.id}
                                   </Typography>
                                 </div>
                               </div>
@@ -175,7 +179,7 @@ const ManageUnit = ({user}) => {
                                   color="blue-gray"
                                   className="font-normal"
                                 >
-                                  {units}
+                                  {data.content}
                                 </Typography>
                               </div>
                             </div>
@@ -184,13 +188,16 @@ const ManageUnit = ({user}) => {
                           <td className={classes}>
                             <div className="flex gap-4">
                               <Tooltip content="Edit Product">
-                              <Button className="flex gap-1" color="blue" onClick={handleOpen}>
+                              <Button className="flex gap-1" color="blue"
+                              onClick={()=>handleOpen(data.id, data.content)}
+                              >
                               <PencilIcon className="h-4 w-4" />
                                 Edit
                               </Button>
                               </Tooltip>
                               <Tooltip content="Delete Product">
-                                <Button className="flex gap-1" color="red">
+                                <Button onClick={() =>handleDelete(data.id)} 
+                                className="flex gap-1" color="red">
                                   <TrashIcon className="h-4 w-4" />
                                   Delete
                                 </Button>
@@ -199,11 +206,13 @@ const ManageUnit = ({user}) => {
                           </td>
                         </tr>
                       );
-                    },
+                    }
                   )}
                 </tbody>
               </table>
             </CardBody>
+
+
         <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
           <Typography variant="small" color="blue-gray" className="font-normal">
             Page 1 of 10
@@ -219,48 +228,18 @@ const ManageUnit = ({user}) => {
         </CardFooter>
       </Card>
 
-      <Dialog open={open} size="xs" handler={handleOpen}>
-        <div className="flex items-center justify-between">
-          <DialogHeader className="flex flex-col items-start">
-            {" "}
-            <Typography className="mb-1" variant="h4">
-              Edit Unit
-            </Typography>
-          </DialogHeader>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            className="mr-3 h-5 w-5"
-            onClick={handleOpen}
-          >
-            <path
-              fillRule="evenodd"
-              d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
-              clipRule="evenodd"
-            />
-          </svg>
-        </div>
-        <DialogBody>
-          <Typography className="mb-10 -mt-7 " color="gray" variant="lead">
-            Edit Unit Category and then click save button.
-          </Typography>
-          <div className="grid gap-6">
-            <Typography className="-mb-1" color="blue-gray" variant="h6">
-              Product Unit
-            </Typography>
-            <Input label="Product Unit" />
-          </div>
-        </DialogBody>
-        <DialogFooter className="space-x-2">
-        <Button variant="gradient" color="gray" onClick={handleOpen}>
-            Save
-          </Button>
-          <Button variant="text" color="gray" onClick={handleOpen}>
-            Cancel
-          </Button>
-        </DialogFooter>
-      </Dialog>
+      <ModalUnit 
+        open={open}
+        setOpen ={setOpen} 
+        handleOpen ={handleOpen}
+        selectCat={selectCat}
+        cat={cat}
+        setCat={setCat}
+        setSelectCat={setSelectCat}
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
+        />
+
       </div>
   )
 }
