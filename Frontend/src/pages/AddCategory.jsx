@@ -11,6 +11,7 @@ import {
 
 
 const AddCategory = ({user, isLoading, setIsLoading}) => {
+  const [category, setCategory]= useState([]);
   const [newCategory, setNewCategory] = useState(""); //hook for input
   const navigate = useNavigate();
 
@@ -19,14 +20,13 @@ const AddCategory = ({user, isLoading, setIsLoading}) => {
   
     setIsLoading(true);
   
-    const categoryFormData = new FormData();
-    categoryFormData.append("content", newCategory);
+    const categoryForm = new FormData();
+    categoryForm.append("content", newCategory);
   
     categoryService
-      .createCategory(categoryFormData)
+      .createCategory(categoryForm)
       .then((res) => {
-        // setCategory(category.concat(res));
-        setNewCategory("");
+        setCategory(category.concat(res));
       })
       .catch((error) => console.log(error))
       .finally(() => setIsLoading(false));
@@ -64,7 +64,7 @@ const AddCategory = ({user, isLoading, setIsLoading}) => {
               </Typography>
 
               <Input
-                type='text'
+                type="text"
                 value={newCategory}
                 onChange={(e)=>setNewCategory(e.target.value)}
                 size="lg"

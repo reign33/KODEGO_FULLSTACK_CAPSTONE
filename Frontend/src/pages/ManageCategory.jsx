@@ -71,6 +71,7 @@ const ManageCategory = ({user, isLoading, setIsLoading}) => {
       .deleteCategory(id)
       .then((_) => {
         setCat((PrevCat)=>PrevCat.filter((cat) => cat.id !== id));
+        setSelectCat(selectCat.filter(sc=>sc.id!==id));
       })
       .catch((error) => console.log(error))
       .finally(() => setIsLoading(false));

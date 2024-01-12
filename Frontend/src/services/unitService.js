@@ -1,13 +1,13 @@
 import axios from "axios";
 
-const baseUrl = "/category";
+const baseUrl = "/unit";
 let token = null;
 
 function setToken(newToken) {
   token = `Bearer ${newToken}`;
 }
 
-async function getCategories() {
+async function getUnits() {
   const config = {
     headers: { Authorization: token },
   };
@@ -16,16 +16,16 @@ async function getCategories() {
   return response.data;
 }
 
-async function createCategory(categoryForm) {
+async function createUnit(unitFormData) {
   const config = {
     headers: { Authorization: token },
   };
 
-  const res = await axios.post(baseUrl, categoryForm, config);
-  return res.data;
+  const response = await axios.post(baseUrl, unitFormData, config);
+  return response.data;
 }
 
-async function deleteCategory(id) {
+async function deleteUnit(id) {
   const config = {
     headers: { Authorization: token },
   };
@@ -34,20 +34,20 @@ async function deleteCategory(id) {
   return response;
 }
 
-async function editCategory(id, editCatData) {
+async function editUnit(id, editUnitData) {
   const config = {
     headers: { Authorization: token },
   };
   
-    const response = await axios.put(`${baseUrl}/${id}`, editCatData, config);
+    const response = await axios.put(`${baseUrl}/${id}`, editUnitData, config);
     return response.data; // Assuming the server returns the updated category data
   }
 
 
 export default {
   setToken,
-  getCategories,
-  createCategory,
-  deleteCategory,
-  editCategory,
+  getUnits,
+  createUnit,
+  deleteUnit,
+  editUnit,
 };
