@@ -24,8 +24,8 @@ const ModalUnit = ({open, setOpen, handleOpen, cat, setCat, selectCat, setSelect
   const handleEdit = (id) => {
     setIsLoading(true);
     const newlyEdit = {"content": newEdit}
-    categoryService
-      .editCategory(id, newlyEdit)
+    unitService
+      .editUnit(id, newlyEdit)
       .then((res) => {
         setCat(cat.concat(res));
         setNewEdit("");

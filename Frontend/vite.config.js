@@ -8,10 +8,11 @@ export default defineConfig({
   server: {
     proxy: {
       "/users": {target: "http://localhost:3001",
-      changeOrigin: true},   
+      changeOrigin: true },   
       "/category": {target: "http://localhost:3001",
-      changeOrigin: true 
-    },
+      changeOrigin: true },
+    "/unit": {target: "http://localhost:3001",
+      changeOrigin: true },
     }
   }
 })

@@ -20,6 +20,7 @@ async function createCategory(categoryForm) {
   const config = {
     headers: { Authorization: token },
   };
+  console.log("config ni category", config);
 
   const res = await axios.post(baseUrl, categoryForm, config);
   return res.data;

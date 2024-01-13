@@ -4,7 +4,7 @@ const baseUrl = "/unit";
 let token = null;
 
 function setToken(newToken) {
-  token = `Bearer ${newToken}`;
+ token = `Bearer ${newToken}`;
 }
 
 async function getUnits() {
@@ -20,6 +20,8 @@ async function createUnit(newAddUnit) {
   const config = {
     headers: { Authorization: token },
   };
+
+  console.log("Config ni addUnit:", config);
 
   const res = await axios.post(baseUrl, newAddUnit, config);
   return res.data;

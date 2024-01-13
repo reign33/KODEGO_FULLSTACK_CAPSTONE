@@ -27,7 +27,7 @@ app.use(morgan(":method :url :status :body")); //terminal logger
 
 app.use("/users", userRouter);
 app.use("/category", categoryRouter);
-app.use("/unit", unitRouter);
+app.use('/unit', unitRouter);
 
 app.use(unknownEndpoint);
 app.use(errorHandler);

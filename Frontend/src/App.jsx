@@ -16,6 +16,7 @@ import Users from './pages/Users';
 import Reports from './pages/Reports';
 import Sidebar from './pages/Sidebar';
 import NavbarSignIn from './pages/navbarSignIn';
+import unitService from './services/unitService.js';
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
       categoryService.setToken(user.token);
+      unitService.setToken(user.token);
       setUser(user);
     }
   }, []);
