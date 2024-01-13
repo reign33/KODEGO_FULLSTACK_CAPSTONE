@@ -16,6 +16,7 @@ import Users from './pages/Users';
 import Reports from './pages/Reports';
 import Sidebar from './pages/Sidebar';
 import NavbarSignIn from './pages/navbarSignIn';
+import unitService from './services/unitService.js';
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
       categoryService.setToken(user.token);
+      unitService.setToken(user.token);
       setUser(user);
     }
   }, []);
@@ -60,9 +62,25 @@ function App() {
           setIsLoading={setIsLoading}
           />} />
 
-          <Route path="/" element={<Dashboard user={user} setUser={setUser}/>} />
-          <Route path="/addunit" element={<AddUnit user={user} />} />
-          <Route path="/manageunit" element={<ManageUnit user={user} />} />
+          <Route 
+          path="/" 
+          element={<Dashboard 
+          user={user} 
+          setUser={setUser}/>} />
+          
+          <Route 
+          path="/addunit" 
+          element={<AddUnit 
+          user={user} 
+          isLoading={isLoading} 
+          setIsLoading={setIsLoading} 
+          />} />
+
+          <Route path="/manageunit" element={<ManageUnit 
+          user={user} 
+          isLoading={isLoading} 
+          setIsLoading={setIsLoading} 
+          />} />
           
           <Route 
           path="/addcategory" 
@@ -73,9 +91,21 @@ function App() {
           setIsLoading={setIsLoading} 
           />} />
 
-          <Route path="/managecategory" element={<ManageCategory 
-          user={user} isLoading={isLoading} setIsLoading={setIsLoading} />} />
-          <Route path="/addproducts" element={<AddProducts user={user} />} />
+          <Route 
+          path="/managecategory" 
+          element={<ManageCategory 
+          user={user} 
+          isLoading={isLoading} 
+          setIsLoading={setIsLoading} 
+          />} />
+          
+          <Route 
+          path="/addproducts" 
+          element={<AddProducts 
+          user={user} 
+          isLoading={isLoading} 
+          setIsLoading={setIsLoading} 
+          />} />
           
           <Route 
           path="/manageproducts" 
@@ -93,7 +123,14 @@ function App() {
           setIsLoading={setIsLoading} 
           />} />
 
-          <Route path="/reports" element={<Reports user={user} />} />
+          <Route 
+          path="/reports" 
+          element={<Reports 
+          user={user} 
+          isLoading={isLoading} 
+          setIsLoading={setIsLoading} 
+          />} />
+
           <Route path="*" element={<Navigate to="/login"/>} />
         
       </Routes>

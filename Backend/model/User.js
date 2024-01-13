@@ -16,12 +16,12 @@ const userSchema = new mongoose.Schema({
     },
   ],
 
-  // unit: [
-  //   {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: "Units",
-  //   },
-  // ],
+  unit: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Units",
+    },
+  ],
 
 });
 

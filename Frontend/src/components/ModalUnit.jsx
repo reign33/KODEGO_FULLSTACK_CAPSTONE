@@ -1,5 +1,5 @@
 import React from 'react'
-import categoryService from '../services/categoryService';
+import unitService from '../services/unitService';
 import LoadingSpinner from './LoadingSpinner';
 import { useState, useEffect } from 'react';
 import {
@@ -12,11 +12,11 @@ import {
   DialogFooter,
   } from "@material-tailwind/react";
 
-const ModalCategory = ({open, setOpen, handleOpen, cat, setCat, selectCat, setSelectCat, isLoading, setIsLoading}) => {
+const ModalUnit = ({open, setOpen, handleOpen, cat, setCat, selectCat, setSelectCat, isLoading, setIsLoading}) => {
     const [newEdit, setNewEdit] = useState("");
 
     useEffect(() => {
-        categoryService.getCategories().then((res) => {
+        unitService.getUnits().then((res) => {
           setCat(res); 
         });
       }, []);
@@ -24,8 +24,8 @@ const ModalCategory = ({open, setOpen, handleOpen, cat, setCat, selectCat, setSe
   const handleEdit = (id) => {
     setIsLoading(true);
     const newlyEdit = {"content": newEdit}
-    categoryService
-      .editCategory(id, newlyEdit)
+    unitService
+      .editUnit(id, newlyEdit)
       .then((res) => {
         setCat(cat.concat(res));
         setNewEdit("");
@@ -94,4 +94,4 @@ const ModalCategory = ({open, setOpen, handleOpen, cat, setCat, selectCat, setSe
   )
 }
 
-export default ModalCategory
+export default ModalUnit

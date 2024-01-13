@@ -8,6 +8,9 @@ async function getUsers(req, res) {
   const users = await User.find({}).populate("category", {
     content: 1,
     important: 1,
+  }).populate("unit", {
+    content: 1,
+    important: 1,
   });
   return res.json(users);
 } //this function is just for checking para pwede i hit sa browser for testing

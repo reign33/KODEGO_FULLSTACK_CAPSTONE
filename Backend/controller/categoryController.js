@@ -64,6 +64,8 @@ async function deleteCategory(req, res, next) {
 async function createCategory(req, res, next) {
   const body = req.body;
 
+  console.log('createCategory', body);
+
   try {
     const decodedToken = jwt.verify(getTokenFrom(req), config.JWT_SECRET);
 

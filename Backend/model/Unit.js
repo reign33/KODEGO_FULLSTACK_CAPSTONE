@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const categorySchema = new mongoose.Schema({
+const unitSchema = new mongoose.Schema({
   content: {
     type: String,
     minLength: 4,
@@ -12,7 +12,7 @@ const categorySchema = new mongoose.Schema({
   },
 });
 
-categorySchema.set("toJSON", {
+unitSchema.set("toJSON", {
   transform: (_document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString();
     delete returnedObject._id;
@@ -20,8 +20,8 @@ categorySchema.set("toJSON", {
   },
 });
 
-const Categories = mongoose.model("Categories", categorySchema);
+const Units = mongoose.model("Units", unitSchema);
 
-export default Categories;
+export default Units;
 
 //npm i bcrypt to transform passwordhash to encrypted type

@@ -193,7 +193,8 @@ const ManageCategory = ({user, isLoading, setIsLoading}) => {
                             </Button>
                           </Tooltip>
                           <Tooltip content="Delete Product">
-                            <Button onClick={() =>handleDelete(data.id)} className="flex gap-1" color="red">
+                            <Button onClick={() =>handleDelete(data.id)} 
+                            className="flex gap-1" color="red">
                               <TrashIcon className="h-4 w-4" />
                                 Delete
                             </Button>
