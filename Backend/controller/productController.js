@@ -18,13 +18,13 @@ async function getProductInfo(_, res, next) {
 async function getProducts(req, res, next) {
   try {
     const decodedToken = jwt.verify(getTokenFrom(req), config.JWT_SECRET);
-    const product = await Units.find({ userId: decodedToken.id }).populate(
+    const product = await Products.find({ userId: decodedToken.id }).populate(
       "userId",
       {
         username: 1,
       }
     );
-    return res.json(unit);
+    return res.json(product);
   } catch (error) {
     next(error);
   }

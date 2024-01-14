@@ -7,7 +7,7 @@ function setToken(newToken) {
  token = `Bearer ${newToken}`;
 }
 
-async function getProduct() {
+async function getProducts() {
   const config = {
     headers: { Authorization: token },
   };
@@ -47,7 +47,7 @@ async function editProduct(id, editUnitData) {
 
 export default {
   setToken,
-  getProduct,
+  getProducts,
   createProduct,
   deleteProduct,
   editProduct,

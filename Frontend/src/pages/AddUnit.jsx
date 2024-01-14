@@ -17,8 +17,6 @@ const AddUnit = ({user, isLoading, setIsLoading}) => {
     e.preventDefault();
     setIsLoading(true);
     const addnewUnit = { content: newUnit };
-
-    console.log('Request Payload', addnewUnit);
     
     unitService
     .createUnit(addnewUnit)
