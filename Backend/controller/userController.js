@@ -11,6 +11,12 @@ async function getUsers(req, res) {
   }).populate("unit", {
     content: 1,
     important: 1,
+  }).populate("product", {
+    name: 1,
+    category: 1,
+    quantity: 1,
+    unit: 1,
+    price:1,
   });
   return res.json(users);
 } //this function is just for checking para pwede i hit sa browser for testing

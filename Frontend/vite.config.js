@@ -13,6 +13,8 @@ export default defineConfig({
       changeOrigin: true },
     "/unit": {target: "http://localhost:3001",
       changeOrigin: true },
+      "/product": {target: "http://localhost:3001",
+      changeOrigin: true },
     }
   }
 })

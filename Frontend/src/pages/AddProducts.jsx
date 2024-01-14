@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react'
+import productService from '../services/productService';
 import categoryService from '../services/categoryService';
 import unitService from '../services/unitService';
 import { useNavigate } from 'react-router-dom';
@@ -46,7 +47,7 @@ const AddProducts = ({user, isLoading, setIsLoading}) => {
     unit: product.unit,
     price: product.price,
   };
-
+console.log(newlyAddedProduct);
     productService
       .createProduct(newlyAddedProduct)
       .then((res) => {
@@ -96,10 +97,10 @@ const AddProducts = ({user, isLoading, setIsLoading}) => {
               </Typography>
               <div>
                 <Select 
-                // value={product.category} 
+                value={product.category} 
                 onChange={(value)=>setProduct({...product, category: value})}
                 size="lg" className=" !border-t-blue-gray-200 focus:!border-t-gray-900" labelProps={{ className: "before:content-none after:content-none", }}>
-                  {cat.map((data)=>(<Option key={data.id} value={data.id}>{data.content}</Option>))}
+                  {cat.map((data)=>(<Option key={data.id} value={data.content}>{data.content}</Option>))}
                 </Select>
               </div>
               <Typography variant="h6" color="blue-gray" className="-mb-3">
@@ -120,10 +121,10 @@ const AddProducts = ({user, isLoading, setIsLoading}) => {
               </Typography>
               <div>
                 <Select
-                // value={product.unit} 
+                value={product.unit} 
                 onChange={(value)=>setProduct({...product, unit: value})}
                 size="lg" className=" !border-t-blue-gray-200 focus:!border-t-gray-900" labelProps={{ className: "before:content-none after:content-none", }}>
-                {unit.map((data)=>(<Option key={data.id} value={data.id}>{data.content}</Option>))}
+                {unit.map((data)=>(<Option key={data.id} value={data.content}>{data.content}</Option>))}
                 </Select>
               </div>
               <Typography variant="h6" color="blue-gray" className="-mb-3">

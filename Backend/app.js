@@ -8,6 +8,7 @@ import unknownEndpoint from "./middlewares/unknownEndPoint.js";
 import connectToDB from "./utils/connectToDB.js";
 import errorHandler from "./middlewares/errorHandler.js";
 import config from "./utils/config.js";
+import productRouter from "./routes/productRouter.js";
 
 
 
@@ -28,6 +29,7 @@ app.use(morgan(":method :url :status :body")); //terminal logger
 app.use("/users", userRouter);
 app.use("/category", categoryRouter);
 app.use('/unit', unitRouter);
+app.use('/product', productRouter);
 
 app.use(unknownEndpoint);
 app.use(errorHandler);
