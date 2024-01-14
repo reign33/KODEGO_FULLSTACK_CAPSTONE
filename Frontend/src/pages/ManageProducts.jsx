@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
 import LoadingSpinner from '../components/LoadingSpinner';
+import productService from '../services/productService';
 import { useNavigate } from 'react-router-dom';
 import {
   MagnifyingGlassIcon,

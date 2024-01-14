@@ -23,6 +23,13 @@ const userSchema = new mongoose.Schema({
     },
   ],
 
+  product: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Products",
+    },
+  ],
+
 });
 
 userSchema.plugin(uniqueValidator);
