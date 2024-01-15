@@ -1,30 +1,34 @@
+import React from 'react'
 import { BiLogOutCircle } from "react-icons/bi";
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useNavigate } from 'react-router-dom'
 import Logo from '../asset/REL_Logo.png'
+import Date from './Date'
 
 const navigation = [
   { name: 'Calendar', href: '#', current: true },
   // { name: 'Team', href: '#', current: false },
   // { name: 'Projects', href: '#', current: false },
-  { name: 'Time', href: '#', current: false },
+  // { name: 'Time', href: '#', current: false },
 ]
 
-//edit
+
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
 export default function NavbarSignIn({user, setUser}) {
+  
   const navigate = useNavigate();
   const handleLogout = () => {
             window.localStorage.removeItem("loggedUser");
             setUser(null);
             navigate('/signup');
           }
+//edit
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -54,7 +58,7 @@ export default function NavbarSignIn({user, setUser}) {
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
-                    {navigation.map((item) => (
+                    {/* {navigation.map((item) => (
                       <a
                         key={item.name}
                         href={item.href}
@@ -66,7 +70,12 @@ export default function NavbarSignIn({user, setUser}) {
                       >
                         {item.name}
                       </a>
-                    ))}
+                    ))} */}
+      
+      <div >
+        <Date/>
+      </div>
+      
                   </div>
                 </div>
               </div>
@@ -157,5 +166,6 @@ export default function NavbarSignIn({user, setUser}) {
         </>
       )}
     </Disclosure>
+
   )
 }
