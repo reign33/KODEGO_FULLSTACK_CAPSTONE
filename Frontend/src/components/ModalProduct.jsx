@@ -16,13 +16,21 @@ import {
   import { Select, Option } from "@material-tailwind/react";
 
 
-const ModalProduct = ({ open, setOpen, product, setProduct, isLoading, 
-    setIsLoading, selectProd, setSelectProd, handleOpen,
+const ModalProduct = ({ 
+  open, 
+  setOpen, 
+  product, 
+  setProduct, 
+  isLoading, 
+  setIsLoading, 
+  selectProd, 
+  setSelectProd, 
+  handleOpen,
+  newEdit,
+  setNewEdit,
 }) => {
-    const [catdata, setCatdata] = useState([]);
-    const [unitdata, setUnitdata] = useState([]);
-    const [newEdit, setNewEdit] = useState({
-        name: '', category: null, quantity: 0, unit: null, price: 0 });
+    const [catdata, setCatdata] = useState([]); //for display sa category select
+    const [unitdata, setUnitdata] = useState([]); //for display sa unit select
 
     useEffect(() => {
         productService.getProducts().then((res)=>{
@@ -34,30 +42,41 @@ const ModalProduct = ({ open, setOpen, product, setProduct, isLoading,
         categoryService.getCategories().then((res)=>{
         setCatdata(res); 
         });
-    
       }, []);
+
+    const handleChange = (id, value) => {
+      setSelectProd((prev) => ({ ...prev, [id]: value }));
+      };
 
       const handleEdit = (id) => {
         setIsLoading(true);
+      
+
         const newlyEdit = {
-        "name": newEdit.name,
-        "category": newEdit.category,
-        "quantity": newEdit.quantity,
-        "unit": newEdit.unit,
-        "price": newEdit.price,
+        "name": selectProd.name,
+        "category": selectProd.category,
+        "quantity": selectProd.quantity,
+        "unit": selectProd.unit,
+        "price": selectProd.price,
         }
         productService
           .editProduct(id, newlyEdit)
           .then((res) => {
-            setProduct(product.concat(res));
-            setNewEdit(null);
-            setSelectProd(id, newlyEdit);
+          setProduct(product.concat(res));
+          setNewEdit({
+          name: '',
+          category: null,
+          quantity: 0,
+          unit: null,
+          price: 0,
+          });
+           
           })
           .catch((error) => console.log(error))
           .finally(() =>{
             setOpen(false);
             setIsLoading(false);
-          })
+          });
       };
     
       if (isLoading === true) {
@@ -99,32 +118,34 @@ const ModalProduct = ({ open, setOpen, product, setProduct, isLoading,
           </Typography>
           <div className="grid gap-6">
             <Input 
-            type='text'
-            onChange={(e)=>setNewEdit({...newEdit, name: e.target.value})}
-            label={selectProd.name} />
+              type="text"
+              value={selectProd.name}
+              onChange={(e) => handleChange('name', e.target.value)}
+              label={newEdit.name}
+              />
 
             <Select 
-            onChange={(value)=>setNewEdit({...newEdit, category: value})}
-            label={selectProd.category}>
+              onChange={(value) => handleChange('category', value)}
+              label={newEdit.category}>
               {catdata?.map((data)=>(
               <Option key={data.id} value={data.content}>{data.content}</Option>))}            
             </Select>
 
             <Input 
-            type="Number"
-            onChange={(e) => setNewEdit({ ...newEdit, quantity: e.target.value })}
-            label={selectProd.quantity} />
+              type="number"
+              onChange={(e) => handleChange('quantity', e.target.value)}
+              label={newEdit.quantity} />
 
             <Select  
-            onChange={(value)=>setNewEdit({...newEdit, unit: value})}
-            label={selectProd.unit}>
-            {unitdata?.map((data)=>(<Option key={data.id} value={data.content}>{data.content}</Option>))}
+               onChange={(value) => handleChange('unit', value)}
+              label={newEdit.unit}>
+              {unitdata?.map((data)=>(<Option key={data.id} value={data.content}>{data.content}</Option>))}
             </Select>
 
             <Input 
-             type="Number"
-             onChange={(e) => setNewEdit({ ...newEdit, price: e.target.value })}
-            placeholder="₱ 0.00" step="0.01" label={`Price ${selectProd.price}`} />
+              type="number"
+              onChange={(e) => handleChange('price', e.target.value)}
+              placeholder="₱ 0.00" step="0.01" label={`Price ${newEdit.price}`} />
 
           </div>
         </DialogBody>

@@ -46,6 +46,7 @@ const ManageProducts = ({user, isLoading, setIsLoading}) => {
   const [open, setOpen] = useState(false); //for modal toggle switch
   const [selectProd, setSelectProd] = useState([]); //need pass to modal
   const [product, setProduct] = useState([]); //to display
+  const [newEdit, setNewEdit] = useState([]); //capture selected product
   const navigate = useNavigate();
 
   useEffect(()=>{
@@ -86,6 +87,7 @@ const ManageProducts = ({user, isLoading, setIsLoading}) => {
    const handleOpen = (data) => {
     setOpen(!open);
     setSelectProd(data);
+    setNewEdit(data);
   }
 
 
@@ -269,6 +271,8 @@ setSelectProd={setSelectProd}
 isLoading={isLoading}
 setIsLoading={setIsLoading}
 handleOpen={handleOpen}
+newEdit={newEdit}
+setNewEdit={setNewEdit}
 />
     </div>
   )
