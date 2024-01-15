@@ -53,6 +53,7 @@ console.log(newlyAddedProduct);
       .then((res) => {
         setProduct({
           name: '', category: null, quantity: 0, unit: null, price: 0 });
+          navigate('/manageproducts')
       })
       .catch((error) => console.log(error))
       .finally(() => setIsLoading(false));

@@ -22,6 +22,7 @@ const AddUnit = ({user, isLoading, setIsLoading}) => {
     .createUnit(addnewUnit)
     .then((res) => {
         setNewUnit("");
+        navigate('/manageunit')
       })
       .catch((error) => console.log(error))
       .finally(() => setIsLoading(false));
