@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import userService from '../services/userService';
 import { useNavigate } from 'react-router-dom';
-import { TrashIcon } from "@heroicons/react/24/solid";
+import { TrashIcon, UsersIcon } from "@heroicons/react/24/solid";
 import LoadingSpinner from '../components/LoadingSpinner';
 
 import {
@@ -109,13 +109,12 @@ const Users = ({user, isLoading, setIsLoading}) => {
             <tbody>
             {/* Array.isArray(users) && */}
               {users.map(
-                (data) => {
-                  const isLast = data.length > 0? Math.max(...data.map(n=>n.id))+1:0;
-                  const classes = isLast
-                    ? "p-4 "
-                    : "p-4 border-b border-blue-gray-50";
-  
-                  return (
+                (data, index) => {
+                  const isLast = index === users.length - 1;
+                const classes = isLast
+                  ? "p-4 "
+                  : "p-4 border-b border-blue-gray-50";
+                return (
                     <tr key={data.id}>
                       <td className={classes}>
                         <div className="flex items-center gap-3 pr-60">
@@ -125,7 +124,7 @@ const Users = ({user, isLoading, setIsLoading}) => {
                               color="blue-gray"
                               className="font-normal"
                             >
-                              {data.id}
+                              {index + 1}
                             </Typography>
                           </div>
                         </div>
@@ -153,10 +152,9 @@ const Users = ({user, isLoading, setIsLoading}) => {
                           </Tooltip>
                         </div>
                       </td>
-                    </tr>
-                  );
-                },
-              )}
+                      </tr>
+                );
+              })}
             </tbody>
           </table>
         </CardBody>
