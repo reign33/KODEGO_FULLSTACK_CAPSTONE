@@ -119,7 +119,6 @@ const ModalProduct = ({
           <div className="grid gap-6">
             <Input 
               type="text"
-              value={selectProd.name}
               onChange={(e) => handleChange('name', e.target.value)}
               label={newEdit.name}
               />

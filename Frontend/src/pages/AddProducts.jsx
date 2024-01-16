@@ -98,7 +98,6 @@ console.log(newlyAddedProduct);
               </Typography>
               <div>
                 <Select 
-                value={product.category} 
                 onChange={(value)=>setProduct({...product, category: value})}
                 size="lg" className=" !border-t-blue-gray-200 focus:!border-t-gray-900" labelProps={{ className: "before:content-none after:content-none", }}>
                   {cat.map((data)=>(<Option key={data.id} value={data.content}>{data.content}</Option>))}
@@ -122,7 +121,6 @@ console.log(newlyAddedProduct);
               </Typography>
               <div>
                 <Select
-                value={product.unit} 
                 onChange={(value)=>setProduct({...product, unit: value})}
                 size="lg" className=" !border-t-blue-gray-200 focus:!border-t-gray-900" labelProps={{ className: "before:content-none after:content-none", }}>
                 {unit.map((data)=>(<Option key={data.id} value={data.content}>{data.content}</Option>))}
