@@ -1,6 +1,10 @@
 import React from 'react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import categoryService from '../services/categoryService';
+import unitService from '../services/unitService';
+import productService from '../services/productService';
+import userService from '../services/userService';
 import {
   Card,
   CardBody,
@@ -192,7 +196,11 @@ const chartConfig = {
 };
 
 const Dashboard = ({user}) => {
-const navigate = useNavigate();
+  const [category, setCategory ] = useState([]);
+  const [unit, setUnit] = useState([]);
+  const [userData, setUserData] = useState([]);
+  const [product, setProduct] = useState([]);
+  const navigate = useNavigate();
 
 useEffect(()=>{
   if(!user){
@@ -201,9 +209,32 @@ useEffect(()=>{
 }, [user, navigate]);
 
 
+useEffect(()=>{
+
+  userService.getUsers().then((res)=>{
+    setUserData(res);
+  });
+  categoryService.getCategories().then((res)=>{
+    setCategory(res);
+  });
+  unitService.getUnits().then((res)=>{
+    setUnit(res);
+  });
+  productService.getProducts().then((res)=>{
+    setProduct(res);
+  });
+
+}, []);
+
+
   return (
     <div className='flex flex-col flex-wrap justify-start w-full p-4'>
-      <StatsCard />
+      <StatsCard 
+      category={category} 
+      unit={unit}
+      product={product}
+      userData={userData}
+      />
       <div>
       <Card>
       <CardHeader

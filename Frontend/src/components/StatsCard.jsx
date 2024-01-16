@@ -1,6 +1,6 @@
 import React from 'react'
 
-const StatsCard = () => {
+const StatsCard = ({category, unit, product, userData}) => {
   return (
 
     <div>
@@ -23,7 +23,7 @@ const StatsCard = () => {
                 Total users
                 </p>
                 <p className="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                4
+                {userData && userData.length}
                 </p>
             </div>
             </div>
@@ -48,7 +48,7 @@ const StatsCard = () => {
                 Total Categories
                 </p>
                 <p className="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                13
+                {category.length}
                 </p>
             </div>
             </div>
@@ -71,7 +71,7 @@ const StatsCard = () => {
                 Total units
                 </p>
                 <p className="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                8
+                {unit.length}
                 </p>
             </div>
             </div>
@@ -96,7 +96,7 @@ const StatsCard = () => {
                 Total Products
                 </p>
                 <p className="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                35
+                {product.length}
                 </p>
             </div>
             </div>
