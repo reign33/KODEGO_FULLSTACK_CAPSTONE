@@ -19,21 +19,6 @@ import {
   Tooltip,
 } from "@material-tailwind/react";
 
-const TABS = [
-  {
-    label: "All",
-    value: "all",
-  },
-  {
-    label: "Monitored",
-    value: "monitored",
-  },
-  {
-    label: "Unmonitored",
-    value: "unmonitored",
-  },
-];
- 
 const TABLE_HEAD = ["No.", "Category", "Action"];
  
 
@@ -43,6 +28,30 @@ const ManageCategory = ({user, isLoading, setIsLoading}) => {
   const [selectCat, setSelectCat] = useState([]); //need pass to modal
   const [cat, setCat] = useState([]); //storage of database
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    const lowerCaseQuery = query.toLowerCase();
+  
+    // Check if there is a query
+    if (query.trim() === "") {
+      // If no query, set the data back to the original full list
+      categoryService.getCategories().then((res) => {
+        setCat(res);
+      });
+    } else {
+      // If there is a query, filter the data based on the query
+      const searchResults = cat.filter((data) =>
+        Object.values(data).some(
+          (value) =>
+            typeof value === "string" && value.toLowerCase().includes(lowerCaseQuery)
+        )
+      );
+      setCat(searchResults);
+    }
+  };
+  
 
   const handleOpen = (id, content) => {
     setOpen(!open);
@@ -83,8 +92,7 @@ const ManageCategory = ({user, isLoading, setIsLoading}) => {
       </div>
     );
   }
-    
- 
+
   return (
       <div className='flex flex-wrap justify-start w-full p-4'>
         <Card className="h-full w-full p-5">
@@ -107,19 +115,22 @@ const ManageCategory = ({user, isLoading, setIsLoading}) => {
               </div>
           </div>
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-            <Tabs value="all" className="w-full md:w-max">
-              <TabsHeader>
-                {TABS.map(({ label, value }) => (
-                  <Tab key={value} value={value}>
-                    &nbsp;&nbsp;{label}&nbsp;&nbsp;
-                  </Tab>
-                ))}
-              </TabsHeader>
-            </Tabs>
+            <div className="flex gap-2 items-center">
+              <span className="text-sm">Show</span>
+                <select
+                  className="w-12 rounded-md border-0">
+                  <option>10</option>
+                  <option>25</option>
+                  <option>100</option>
+                </select>
+              <span className="text-sm">entries</span>
+            </div>
             <div className="w-full md:w-72">
               <Input
                 label="Search"
                 icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+                value={searchQuery}
+                onChange={(e) => handleSearch(e.target.value)}
               />
             </div>
           </div>
@@ -145,14 +156,12 @@ const ManageCategory = ({user, isLoading, setIsLoading}) => {
               </tr>
             </thead>
             <tbody>
-            {/* {Array.isArray(cat) &&  */}
-              {cat.map(
-                (data, index) => {
-                  const isLast = index === cat.length - 1; 
-                  const classes = index === isLast
-                    ? "p-4 "
-                    : "p-4 border-b border-blue-gray-50";
-                  return (
+              {cat.map((data, index) => {
+                const isLast = index === cat.length - 1;
+                const classes = isLast
+                  ? "p-4 "
+                  : "p-4 border-b border-blue-gray-50";
+                return (
                     <tr key={data.id}>
                       <td className={classes}>
                         <div className="flex items-center gap-3 pr-60">
@@ -163,7 +172,7 @@ const ManageCategory = ({user, isLoading, setIsLoading}) => {
                               color="blue-gray"
                               className="font-normal"
                             >
-                              {data.id}
+                              {index + 1}
                             </Typography>
                           </div>
                         </div>
@@ -185,26 +194,25 @@ const ManageCategory = ({user, isLoading, setIsLoading}) => {
                         <div className="flex gap-3">
 
                           <Tooltip content="Edit Product">
-                            <Button className="flex gap-1" color="blue" 
+                            <Button className="flex gap-1" color="deep-purple" 
                             onClick={()=>handleOpen(data.id, data.content)}
                             >
                               <PencilIcon className="h-4 w-4" />
-                                Edit
+
                             </Button>
                           </Tooltip>
                           <Tooltip content="Delete Product">
                             <Button onClick={() =>handleDelete(data.id)} 
                             className="flex gap-1" color="red">
                               <TrashIcon className="h-4 w-4" />
-                                Delete
+
                             </Button>
                           </Tooltip>
                         </div>
                       </td>
-                    </tr>
-                  );
-                },
-              )}
+                      </tr>
+                );
+              })}
             </tbody>
           </table>
         </CardBody>
