@@ -48,6 +48,36 @@ const ManageProducts = ({user, isLoading, setIsLoading}) => {
   const [product, setProduct] = useState([]); //to display
   const [newEdit, setNewEdit] = useState([]); //capture selected product
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    const lowerCaseQuery = query.toLowerCase();
+  
+    // Check if there is a query
+    if (query.trim() === "") {
+      // If no query, set the data back to the original full list
+      productService.getProducts().then((res) => {
+        setProduct(res);
+      });
+    } else {
+      // If there is a query, filter the data based on the query
+      const searchResults = product.filter((data) =>
+        Object.values(data).some((value) => {
+          if (typeof value === "string") {
+            return value.toLowerCase().includes(lowerCaseQuery);
+          } else if (typeof value === "number") {
+            // Convert number to string for comparison
+            return value.toString().includes(lowerCaseQuery);
+          }
+          return false;
+        })
+      );
+      setProduct(searchResults);
+    }
+  };
+  
+
 
   useEffect(()=>{
     if(!user){
@@ -111,20 +141,23 @@ const ManageProducts = ({user, isLoading, setIsLoading}) => {
           </div>
         </div>
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-          <Tabs value="all" className="w-full md:w-max">
-            <TabsHeader>
-              {TABS.map(({ label, value }) => (
-                <Tab key={value} value={value}>
-                  &nbsp;&nbsp;{label}&nbsp;&nbsp;
-                </Tab>
-              ))}
-            </TabsHeader>
-          </Tabs>
+            <div className="flex gap-2 items-center">
+              <span className="text-sm">Show</span>
+                <select
+                  className="w-12 rounded-md border-0">
+                  <option>10</option>
+                  <option>25</option>
+                  <option>100</option>
+                </select>
+              <span className="text-sm">entries</span>
+            </div>
           <div className="w-full md:w-72">
-            <Input
-              label="Search"
-              icon={<MagnifyingGlassIcon className="h-5 w-5" />}
-            />
+              <Input
+                label="Search"
+                icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+                value={searchQuery}
+                onChange={(e) => handleSearch(e.target.value)}
+              />
           </div>
         </div>
       </CardHeader>
@@ -152,15 +185,12 @@ const ManageProducts = ({user, isLoading, setIsLoading}) => {
                 </tr>
               </thead>
               <tbody>
-              {/* Array.isArray(product) &&  */}
-                {product.map(
-                  (data, index) => {
-                    const isLast = index === product.length - 1;
-                    const classes = isLast
-                      ? "p-4"
-                      : "p-4 border-b border-blue-gray-50";
-
-                    return (
+              {product.map((data, index) => {
+                const isLast = index === product.length - 1;
+                const classes = isLast
+                  ? "p-4 "
+                  : "p-4 border-b border-blue-gray-50";
+                return (
                       <tr key={data?.id}>
                         <td className={classes}>
                           <div className="flex items-center gap-3">
@@ -223,10 +253,9 @@ const ManageProducts = ({user, isLoading, setIsLoading}) => {
                         <td className={classes}>
                           <div className="flex gap-4">
                             <Tooltip content="Edit Product">
-                              <Button className="flex gap-1" color="blue"
+                              <Button className="flex gap-1" color="deep-purple"
                                onClick={()=>handleOpen(data)}>
                                 <PencilIcon className="h-4 w-4" />
-                                  Edit
                               </Button>
                             </Tooltip>
                             <Tooltip content="Delete Product">
@@ -234,16 +263,14 @@ const ManageProducts = ({user, isLoading, setIsLoading}) => {
                               onClick={() =>handleDelete(data.id)}
                               className="flex gap-1" color="red">
                                 <TrashIcon className="h-4 w-4" />
-                                Delete
                               </Button>
                             </Tooltip>
                           </div>
                         </td>
-                      </tr>
-                    );
-                  },
-                )}
-              </tbody>
+                        </tr>
+                );
+              })}
+            </tbody>
             </table>
           </CardBody>
       <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
