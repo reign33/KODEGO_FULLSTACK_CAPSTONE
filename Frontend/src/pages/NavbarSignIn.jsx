@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { BiLogOutCircle } from "react-icons/bi";
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
@@ -6,6 +6,7 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useNavigate } from 'react-router-dom'
 import Logo from '../asset/REL_Logo.png'
 import Date from './Date'
+import ModalAvatar from '../components/ModalAvatar';
 
 const navigation = [
   { name: 'Calendar', href: '#', current: true },
@@ -20,20 +21,27 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function NavbarSignIn({user, setUser}) {
-  
+export default function NavbarSignIn({user, setUser,}) {
+
+  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  
   const handleLogout = () => {
             window.localStorage.removeItem("loggedUser");
             setUser(null);
             navigate('/signup');
           }
-//edit
+  
+  const handleOpen = () => {
+    setOpen(!open);
+          }
 
   return (
+    <div>
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
-        <>
+        
+        <div>
           <div className="max-w-7xl px-2 sm:px-6 lg:px-8">
             <div className="relative flex h-16 items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -72,24 +80,23 @@ export default function NavbarSignIn({user, setUser}) {
                       </a>
                     ))} */}
       
-      <div >
-        <Date/>
-      </div>
+                  <div >
+                    <Date/>
+                  </div>
       
                   </div>
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <button
-                  type="button"
-                  className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                <div
+                  className="relative rounded-full bg-gray-800 p-1 text-gray-400 font-medium"
                 >
-                  <span className="absolute -inset-1.5" />
-                  <span className="sr-only">View notifications</span>
+                  {/* <span className="absolute -inset-1.5" />
+                  <span className="sr-only">View notifications</span> */}
                   <div className="font-lg text-[16px] text-[white]">
                     {user?.username}{" "}
                   </div>
-                </button>
+                </div>
 
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">
@@ -98,7 +105,7 @@ export default function NavbarSignIn({user, setUser}) {
                       <span className="absolute -inset-1.5" />
                       <span className="sr-only">Open user menu</span>
                       <img
-                        className="h-8 w-8 rounded-full"
+                        className="h-9 w-9 rounded-full"
                         src="/rcprofilepic.png"
                         alt="Profile Pic"
                       />
@@ -116,12 +123,11 @@ export default function NavbarSignIn({user, setUser}) {
                     <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href="#"
+                          <p onClick={handleOpen}
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
-                            Change Profile Picture
-                          </a>
+                            User Settings
+                          </p>
                         )}
                       </Menu.Item>
                       <Menu.Item>
@@ -163,9 +169,15 @@ export default function NavbarSignIn({user, setUser}) {
               ))}
             </div>
           </Disclosure.Panel>
-        </>
+        </div>
       )}
     </Disclosure>
+     <ModalAvatar 
+     open={open}
+     setOpen={setOpen}
+     handleOpen={handleOpen} />
+     </div>
+     
 
   )
 }
