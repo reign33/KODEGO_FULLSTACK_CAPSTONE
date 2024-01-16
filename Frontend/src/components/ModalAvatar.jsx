@@ -1,5 +1,4 @@
 import React from 'react'
-import categoryService from '../services/categoryService';
 import LoadingSpinner from './LoadingSpinner';
 import { useState, useEffect } from 'react';
 import {
