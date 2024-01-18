@@ -12,6 +12,7 @@ import {
   } from "@material-tailwind/react";
 import profileService from '../services/profileService';
 import userService from '../services/userService';
+import { useNavigate } from 'react-router-dom';
 
 const ModalAvatar = ({
   user,
@@ -32,6 +33,7 @@ const ModalAvatar = ({
   const [loading3, setLoading3] = useState(false);
   const [compare, setCompare]=useState([]);
   const [getcompare, setGetCompare] =useState(null);
+  const navigate = useNavigate();
 
   useEffect(()=>{
     userService.getUsers().then((res)=>{
@@ -43,7 +45,7 @@ const ModalAvatar = ({
   const UpdateUserName = () =>{
 
     compare.find((data)=>{
-      if(data.name === user.name && data.username === user.username){
+      if(data.name === user.name || data.username === user.username){
     setLoading3(true);
     setGetCompare(data);
     const newName = { name: userName };
@@ -51,12 +53,12 @@ const ModalAvatar = ({
         .updateUserName(data.id, newName)
         .then((res) => {
           setUserName("");
-          console.log("data ng user ID if", data.id);
+          console.log("data ng user ID if", data.name);
         })
         .catch((error) => console.log(error))
         .finally(() =>  setLoading3(false));
         }else{
-          console.log("data ng user ID else", data.id);
+          console.log("username list", data.username);
         }})
     };
 
@@ -80,6 +82,7 @@ const ModalAvatar = ({
         const profileformData = new FormData();
         profileformData.append("image", newFile);
   
+        // if(!newFile){
         profileService
           .createProfile(profileformData)
           .then((res) => {
@@ -91,6 +94,7 @@ const ModalAvatar = ({
           .finally(() =>{
             setOpen(false);
           })
+        // } else {navigate('/');}
     };
 
     
@@ -142,7 +146,9 @@ const ModalAvatar = ({
           </div>
         : <Input 
           type='text'
-          label= {"Your Name: " + getcompare?.name + "."}
+          label= {
+            !getcompare? "Your Name: " + user?.name + "." 
+            : "Change name success! will take effect in your next login Thanks"}
           value={userName}
           onChange={(e)=>{setUserName(e.target.value)}}
        />}
