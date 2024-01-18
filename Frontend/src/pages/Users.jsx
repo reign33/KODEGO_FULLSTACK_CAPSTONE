@@ -17,25 +17,6 @@ import {
 const TABLE_HEAD = ["No.", "Email", "Action"];
  
 
-// const TABLE_ROWS = [
-//   {
-//     Number: "1",
-//     email: "email@baskog.com",
-//   },
-//   {
-//     Number: "2",
-//     email: "email@baskog.com",
-//   },
-//   {
-//     Number: "3",
-//     email: "email@baskog.com",
-//   },
-//   {
-//     Number: "4",
-//     email: "email@baskog.com",
-//   },
-// ];
-
 const Users = ({user, isLoading, setIsLoading}) => {
   const [users, setUsers] = useState([]);
 

@@ -23,9 +23,11 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function NavbarSignIn({user, setUser, isLoading, setIsLoading}) {
+export default function NavbarSignIn({user, setUser,}) {
+  const [loading2, setLoading2] = useState(false);
   const [profile, setProfile] = useState([]); //photoInfo
   const [open, setOpen] = useState(false); //modal toggle
+  const [getCompare, setGetCompare] =useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,16 +44,9 @@ export default function NavbarSignIn({user, setUser, isLoading, setIsLoading}) {
   
   const handleOpen = () => {
     setOpen(!open);
-          }
-
-          if (isLoading === true) {
-            return (
-              <div className="flex justify-center items-center">
-                <LoadingSpinner />
-              </div>
-            );
-          }
-
+    };
+    
+          
   return (
     <div>
     <Disclosure as="nav" className="bg-gray-800">
@@ -94,7 +89,7 @@ export default function NavbarSignIn({user, setUser, isLoading, setIsLoading}) {
                   className="relative rounded-full bg-gray-800 p-1 text-gray-400 font-medium"
                 >
                   <div className="font-lg text-[16px] text-[white]">
-                    {user?.username}{" "}
+                    {"Hello, Admin "}{user?.name}{" "}
                   </div>
                 </div>
 
@@ -102,13 +97,25 @@ export default function NavbarSignIn({user, setUser, isLoading, setIsLoading}) {
                 <Menu as="div" className="relative ml-3">
                   <div>
                     <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                      <span className="absolute -inset-1.5" />
-                      <span className="sr-only">Open user menu</span>
-                      <img
-                        className="h-9 w-9 rounded-full"
-                        src={Array.isArray(profile) && profile.map((data)=>data.photoInfo.url)}
-                        alt="Profile Pic"
-                      />
+                      {/* <span className="absolute -inset-1.5" /> */}
+                      {/* <span className="sr-only">Open user menu</span> */}
+                {
+                 loading2 === true
+                 
+                 ?  <div className="flex justify-center items-center">
+                      <LoadingSpinner className= 'w-[30px] h-auto' />
+                    </div>
+                :  <img
+                className="h-10 w-10 rounded-full"
+                src={profile
+                  ? Array.isArray(profile) && profile.map((data)=>data.photoInfo.url)
+                  :"/no_avatar.jpg"
+                }
+                alt="Profile"
+              />
+                
+                }
+ 
                     </Menu.Button>
                   </div>
                   <Transition
@@ -178,8 +185,10 @@ export default function NavbarSignIn({user, setUser, isLoading, setIsLoading}) {
      handleOpen={handleOpen} 
      profile={profile}
      setProfile={setProfile}
-     isLoading={isLoading}
-     setIsLoading={setIsLoading}
+     loading2={loading2}
+     setLoading2={setLoading2}
+     setUser={setUser}
+     user={user}
      />
      </div>
      

@@ -22,10 +22,16 @@ async function deleteUser(id) {
   return response;
 }
 
+async function updateUserName(id, editName) {
+  const res = await axios.put(`${baseUrl}/${id}`, editName);
+  return res;
+}
+
 
 export default {
   register,
   login,
   getUsers,
   deleteUser,
+  updateUserName,
 };
