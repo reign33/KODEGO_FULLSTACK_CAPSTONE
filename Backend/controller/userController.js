@@ -7,10 +7,8 @@ import config from "../utils/config.js";
 async function getUsers(req, res) {
   const users = await User.find({}).populate("category", {
     content: 1,
-    important: 1,
   }).populate("unit", {
     content: 1,
-    important: 1,
   }).populate("product", {
     name: 1,
     category: 1,
@@ -23,10 +21,11 @@ async function getUsers(req, res) {
 
 async function createUser(req, res, next) {
   try {
-  const { username, password } = req.body;
+  const { name, username, password } = req.body;
   const saltRounds = 10; //level of hashing
   const passwordHash = await bcrypt.hash(password, saltRounds); // two params (data, how complicated the hashing)
   const user = new User({
+    name,
     username,
     passwordHash,
   });
@@ -51,6 +50,7 @@ async function loginUser(req, res, next) {
 
   //representation lang ng user
   const userForToken = {
+    name: user.name,
     username: user.username,
     id: user._id, //kaya _id kinukuha lang ntn galing kay schema
   };
@@ -61,7 +61,7 @@ async function loginUser(req, res, next) {
 
   return res
     .status(200)
-    .json({ token, username: user.username, name: user.name });
+    .json({ token, name: user.name, username: user.username, });
 }catch(error){
   next(error);
 }

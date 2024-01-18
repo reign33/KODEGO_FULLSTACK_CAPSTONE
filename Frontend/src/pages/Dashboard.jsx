@@ -106,6 +106,8 @@ const bartConfig = {
     },
   },
 };
+
+
 const chartConfig = {
   type: "line",
   height: 240,

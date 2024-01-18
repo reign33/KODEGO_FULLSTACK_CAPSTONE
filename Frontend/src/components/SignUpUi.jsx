@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import logo from '../asset/REL_Logo.png'
 
 function SignUpUi({user, isLoading, setIsLoading}){
+    const [name, setName] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [confirmpassword, setConfirmpassword] = useState("");
@@ -27,6 +28,7 @@ function SignUpUi({user, isLoading, setIsLoading}){
     setIsLoading(true);
 
     const credentials = {
+      name,
       username,
       password,
     };
@@ -35,6 +37,7 @@ function SignUpUi({user, isLoading, setIsLoading}){
     .register(credentials)
     .then((_) => {
       navigate("/login");
+      setName("");
       setUsername("");
       setPassword("");
     })
@@ -67,6 +70,23 @@ function SignUpUi({user, isLoading, setIsLoading}){
               className="space-y-4 md:space-y-6" 
               onSubmit={handleSignUp}
               >
+                  <div>
+                      <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+                      <input 
+                      type="text" 
+                      name="text"
+                      id="text"
+                      value={name} 
+                      onChange={(e)=>{setName(e.target.value)}}
+                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 
+                      focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 
+                      dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                      placeholder="Your Name"
+                      autoComplete="name"
+                      required
+                />
+                  </div>
+
                   <div>
                       <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
                       <input 

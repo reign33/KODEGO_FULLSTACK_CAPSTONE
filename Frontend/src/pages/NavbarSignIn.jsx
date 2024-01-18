@@ -1,4 +1,6 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
+import profileService from '../services/profileService';
+import LoadingSpinner from '../components/LoadingSpinner';
 import { BiLogOutCircle } from "react-icons/bi";
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
@@ -13,7 +15,7 @@ const navigation = [
   // { name: 'Team', href: '#', current: false },
   // { name: 'Projects', href: '#', current: false },
   // { name: 'Time', href: '#', current: false },
-]
+];
 
 
 
@@ -21,10 +23,16 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function NavbarSignIn({user, setUser,}) {
-
-  const [open, setOpen] = useState(false);
+export default function NavbarSignIn({user, setUser, isLoading, setIsLoading}) {
+  const [profile, setProfile] = useState([]); //photoInfo
+  const [open, setOpen] = useState(false); //modal toggle
   const navigate = useNavigate();
+
+  useEffect(() => {
+    profileService.getProfiles().then((res) => {
+      setProfile(res);
+    });
+  }, []);
   
   const handleLogout = () => {
             window.localStorage.removeItem("loggedUser");
@@ -34,6 +42,14 @@ export default function NavbarSignIn({user, setUser,}) {
   
   const handleOpen = () => {
     setOpen(!open);
+          }
+
+          if (isLoading === true) {
+            return (
+              <div className="flex justify-center items-center">
+                <LoadingSpinner />
+              </div>
+            );
           }
 
   return (
@@ -66,33 +82,17 @@ export default function NavbarSignIn({user, setUser,}) {
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
-                    {/* {navigation.map((item) => (
-                      <a
-                        key={item.name}
-                        href={item.href}
-                        className={classNames(
-                          item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                          'rounded-md px-3 py-2 text-sm font-medium'
-                        )}
-                        aria-current={item.current ? 'page' : undefined}
-                      >
-                        {item.name}
-                      </a>
-                    ))} */}
-      
-                  <div >
+                    <div >
                     <Date/>
-                  </div>
-      
+                    </div>
                   </div>
                 </div>
               </div>
+
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <div
                   className="relative rounded-full bg-gray-800 p-1 text-gray-400 font-medium"
                 >
-                  {/* <span className="absolute -inset-1.5" />
-                  <span className="sr-only">View notifications</span> */}
                   <div className="font-lg text-[16px] text-[white]">
                     {user?.username}{" "}
                   </div>
@@ -106,7 +106,7 @@ export default function NavbarSignIn({user, setUser,}) {
                       <span className="sr-only">Open user menu</span>
                       <img
                         className="h-9 w-9 rounded-full"
-                        src="/rcprofilepic.png"
+                        src={Array.isArray(profile) && profile.map((data)=>data.photoInfo.url)}
                         alt="Profile Pic"
                       />
                     </Menu.Button>
@@ -175,7 +175,12 @@ export default function NavbarSignIn({user, setUser,}) {
      <ModalAvatar 
      open={open}
      setOpen={setOpen}
-     handleOpen={handleOpen} />
+     handleOpen={handleOpen} 
+     profile={profile}
+     setProfile={setProfile}
+     isLoading={isLoading}
+     setIsLoading={setIsLoading}
+     />
      </div>
      
 

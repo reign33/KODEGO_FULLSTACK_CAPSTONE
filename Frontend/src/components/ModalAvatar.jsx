@@ -1,6 +1,5 @@
 import React from 'react'
-import LoadingSpinner from './LoadingSpinner';
-import { useState, useEffect } from 'react';
+import { useState, } from 'react';
 import {
   Input,
   Button,
@@ -9,45 +8,63 @@ import {
   DialogHeader,
   DialogBody,
   DialogFooter,
+  isLoading
   } from "@material-tailwind/react";
+import profileService from '../services/profileService';
 
-const ModalAvatar = ({open, setOpen, handleOpen}) => {
-    const [newEdit, setNewEdit] = useState("");
+const ModalAvatar = ({
+  open,  
+  handleOpen, 
+  profile, 
+  setProfile, 
+  setIsLoading,
 
-//     useEffect(() => {
-//         categoryService.getCategories().then((res) => {
-//           setCat(res); 
-//         });
-//       }, []);
+}) => {
 
-//   const handleEdit = (id) => {
-//     setIsLoading(true);
-//     const newlyEdit = {"content": newEdit}
-//     categoryService
-//       .editCategory(id, newlyEdit)
-//       .then((res) => {
-//         setCat(cat.concat(res));
-//         setNewEdit("");
-//         setSelectCat(id, newlyEdit);
-//       })
-//       .catch((error) => console.log(error))
-//       .finally(() =>{
-//         setOpen(false);
-//         setIsLoading(false);
-//       })
-//   };
+  const [newFile, setNewFile] = useState(null);
+  const [fileId, setFileId] = useState(null);
 
-//   if (isLoading === true) {
-//     return (
-//       <div className="flex justify-center items-center">
-//         <LoadingSpinner />
-//       </div>
-//     );
-//   }
+    const handleSubmit = (e) => {
+      e.preventDefault();
 
+      if (profile._id) {
+        profileService
+          .deleteProfile(profile.id.toString())
+          .then((_) => {
+            setFileId(null);// Reset fileId after successful deletion
+          })
+          .catch((error) => console.log(error));
+      }
+
+        const profileformData = new FormData();
+        profileformData.append("image", newFile);
+  
+        profileService
+          .createProfile(profileformData)
+          .then((res) => {
+            setProfile(profile.concat(res));
+            setNewFile(null);
+          })
+          .catch((error) => console.log(error))
+          .finally(() =>{
+            setOpen(false);
+            setIsLoading(false);
+          })
+    };
+
+    if (isLoading === true) {
+      return (
+        <div className="flex justify-center items-center">
+          <LoadingSpinner />
+        </div>
+      );
+    }
+  
+  
   return (
    
 <Dialog open={open} size="xs" handler={handleOpen}>
+<form onSubmit={handleSubmit}>
   <div className="flex items-center justify-between">
     <DialogHeader className="flex flex-col items-start">
       {" "}
@@ -69,33 +86,42 @@ const ModalAvatar = ({open, setOpen, handleOpen}) => {
     />
     </svg>
   </div>
+
   <DialogBody>
     <Typography className="mb-10 -mt-7 " color="gray" variant="lead">
-    Change your Avatar
+    Profile Settings
     </Typography>
-    <div className="grid gap-6">
-   
-    <div>
-        <input
-        type="file"
-        accept="image/*"
-        />
-    </div>
 
-    <Typography className="-mb-1" color="blue-gray" variant="h6">
-      Name
-    </Typography>
-    <Input type="text" label='Your name here'/>
-    </div>
-    </DialogBody>
-    <DialogFooter className="space-x-2">
-    <Button variant="gradient" color="gray">
-    <div>Save</div>
-    </Button>
-    <Button variant="text" color="gray" onClick={handleOpen}>
-    Cancel
-    </Button>
+    <div className="grid gap-6">
+      <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => setNewFile(e.target.files[0])}
+          />
+           <p>Update Your Avatar.</p>
+      </div>
+
+      <Typography className="-mb-1" color="blue-gray" variant="h6">
+        {/* {profile.length>0
+        ? `Update your Name "${Array.isArray(profile) && profile.map(data=>data.name)}" ?` 
+        : "Add Name"} */}
+        Add Name
+      </Typography>
+  </DialogBody>
+
+
+      <DialogFooter className="space-x-2">
+
+      <Button type='submit' onClick={handleOpen} variant="gradient" color="gray">
+      <div>Save</div>
+      </Button>
+
+      <Button variant="text" color="gray" onClick={handleOpen}>
+      Cancel
+      </Button>
   </DialogFooter>
+  </form>
+  
 </Dialog>
 
   )

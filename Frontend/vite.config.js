@@ -11,9 +11,11 @@ export default defineConfig({
       changeOrigin: true },   
       "/category": {target: "http://localhost:3001",
       changeOrigin: true },
-    "/unit": {target: "http://localhost:3001",
+      "/unit": {target: "http://localhost:3001",
       changeOrigin: true },
       "/product": {target: "http://localhost:3001",
+      changeOrigin: true },
+      "/profile": {target: "http://localhost:3001",
       changeOrigin: true },
     }
   }

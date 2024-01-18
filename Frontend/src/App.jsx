@@ -15,9 +15,10 @@ import AddUnit from './pages/AddUnit';
 import Users from './pages/Users';
 import Reports from './pages/Reports';
 import Sidebar from './pages/Sidebar';
-import NavbarSignIn from './pages/navbarSignIn';
+import NavbarSignIn from './pages/NavbarSignIn.jsx';
 import unitService from './services/unitService.js';
 import productService from './services/productService.js';
+import profileService from './services/profileService.js';
 
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
       unitService.setToken(user.token);
       productService.setToken(user.token);
       setUser(user);
+      profileService.setToken(user.token);
     }
   }, []);
 
