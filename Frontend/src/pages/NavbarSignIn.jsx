@@ -7,7 +7,7 @@ import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useNavigate } from 'react-router-dom'
 import Logo from '../asset/REL_Logo.png'
-import Date from './Date'
+import Date from '../components/Date'
 import ModalAvatar from '../components/ModalAvatar';
 
 const navigation = [
