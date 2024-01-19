@@ -89,7 +89,7 @@ export default function NavbarSignIn({user, setUser,}) {
                   className="relative rounded-full bg-gray-800 p-1 text-gray-400 font-medium"
                 >
                   <div className="font-lg text-[16px] text-[white]">
-                    {"Hello, Admin "}{user?.name}{" "}
+                    {"Hello Admin, "}{user?.name}{" "}
                   </div>
                 </div>
 

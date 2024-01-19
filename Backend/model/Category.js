@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const categorySchema = new mongoose.Schema({
   content: {
     type: String,
-    minLength: 4,
+    minLength: 3,
     required: true,
   },
   userId: {

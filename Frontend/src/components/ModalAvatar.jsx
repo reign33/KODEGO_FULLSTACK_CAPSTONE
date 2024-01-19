@@ -53,7 +53,7 @@ const ModalAvatar = ({
         .updateUserName(data.id, newName)
         .then((res) => {
           setUserName("");
-          console.log("data ng user ID if", data.name);
+
         })
         .catch((error) => console.log(error))
         .finally(() =>  setLoading3(false));
@@ -131,14 +131,12 @@ const ModalAvatar = ({
 
     <div className="grid gap-6">
       <input
-        className='mb-[10px]'
+        className='mb-[25px]'
           type="file"
           accept="image/*"
           onChange={(e) => setNewFile(e.target.files[0])}
           />
       </div>
-
-     
         <div className="grid gap-6 mb-[10px]">
         {loading3 === true
         ? <div className="flex justify-center items-center">
@@ -148,9 +146,10 @@ const ModalAvatar = ({
           type='text'
           label= {
             !getcompare? "Your Name: " + user?.name + "." 
-            : "Change name success! will take effect in your next login Thanks"}
+            : "Your Name Changed Successfully!, Appear in your next login Thanks"}
           value={userName}
           onChange={(e)=>{setUserName(e.target.value)}}
+          className="text-[green] font-medium"
        />}
         </div>
   

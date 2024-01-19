@@ -14,7 +14,7 @@ import {
 } from "@material-tailwind/react";
 
  
-const TABLE_HEAD = ["No.", "Email", "Action"];
+const TABLE_HEAD = ["No.", "Name", "Email", "Action"];
  
 
 const Users = ({user, isLoading, setIsLoading}) => {
@@ -88,54 +88,78 @@ const Users = ({user, isLoading, setIsLoading}) => {
               </tr>
             </thead>
             <tbody>
-            {/* Array.isArray(users) && */}
-              {users.map(
-                (data, index) => {
-                  const isLast = index === users.length - 1;
-                const classes = isLast
-                  ? "p-4 "
-                  : "p-4 border-b border-blue-gray-50";
-                return (
-                    <tr key={data.id}>
-                      <td className={classes}>
-                        <div className="flex items-center gap-3 pr-60">
-                          <div className="flex flex-col text-center">
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-normal"
-                            >
-                              {index + 1}
-                            </Typography>
+            {/* Array.is
+            Array(users) && */}
+            {
+                users.map(
+                  (data, index) => {
+                    const isLast = index === users.length - 1;
+                  const classes = isLast
+                    ? "p-4 "
+                    : "p-4 border-b border-blue-gray-50";
+                  return (
+                      <tr key={data.id}>
+                        
+                        <td className={classes}>
+                          <div className="flex items-center gap-3 pr-60">
+                            <div className="flex flex-col text-center">
+                              <Typography
+                                variant="small"
+                                color="blue-gray"
+                                className="font-normal"
+                              >
+                                {index + 1}
+                              </Typography>
+                            </div>
                           </div>
-                        </div>
-                      </td>
-                      <td className={classes}>
-                        <div className="flex items-center gap-3 pr-60">
-                          <div className="flex flex-col text-center">
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-normal"
-                            >
-                              {data.username}
-                            </Typography>
+                        </td>
+  
+                        <td className={classes}>
+                          <div className="flex items-center gap-3 pr-60">
+                            <div className="flex flex-col text-center">
+                              <Typography
+                                variant="small"
+                                color="blue-gray"
+                                className="font-normal"
+                              >
+                              {data.name}
+                               
+                              </Typography>
+                            </div>
                           </div>
-                        </div>
-                      </td>
-                      <td className={classes}>
-                        <div className="flex gap-3">
-                          <Tooltip content="Delete Product">
-                            <Button onClick={() => handleDelete(data.id)} className="flex gap-1" color="red">
-                              <TrashIcon className="h-4 w-4" />
-                                Delete
-                            </Button>
-                          </Tooltip>
-                        </div>
-                      </td>
-                      </tr>
-                );
-              })}
+                        </td>
+  
+                        <td className={classes}>
+                          <div className="flex items-center gap-3 pr-60">
+                            <div className="flex flex-col text-center">
+                              <Typography
+                                variant="small"
+                                color="blue-gray"
+                                className="font-normal"
+                              >
+                                {data.username}
+                              </Typography>
+                            </div>
+                          </div>
+                        </td>
+  
+                        <td className={classes}>
+                          <div className="flex gap-3">
+                            <Tooltip content="Delete Product">
+                              <Button onClick={() => handleDelete(data.id)} className="flex gap-1" color="red">
+                                <TrashIcon className="h-4 w-4" />
+                                  Delete
+                              </Button>
+                            </Tooltip>
+                          </div>
+                        </td>
+                        </tr>
+                  );
+                }
+              ) //users
+              } 
+
+
             </tbody>
           </table>
         </CardBody>
