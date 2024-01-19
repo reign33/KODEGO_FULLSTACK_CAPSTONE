@@ -53,7 +53,7 @@ export default function NavbarSignIn({user, setUser,}) {
       {({ open }) => (
         
         <div>
-          <div className="max-w-screen-xl mx-auto px-2">
+          <div className="mx-auto px-20">
             <div className="relative flex items-center justify-between h-16">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
