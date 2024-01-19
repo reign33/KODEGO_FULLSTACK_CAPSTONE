@@ -30,7 +30,7 @@ const StatsCard = ({category, unit, product, userData}) => {
                 <UsersIcon className="h-5 w-5" />
             </div>
             <div>
-                <p className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+                <p className="mb-2 text-lg font-bold text-gray-600 dark:text-gray-400">
                 Total users
                 </p>
                 <p className="text-lg font-semibold text-gray-700 dark:text-gray-200">
@@ -44,7 +44,7 @@ const StatsCard = ({category, unit, product, userData}) => {
         >
             <div className="p-4 flex items-center">
             <div
-                className="p-3 rounded-full text-green-500 dark:text-green-100 bg-green-100 dark:bg-green-500 mr-4"
+                className="p-3 rounded-full text-teal-500 dark:text-teal-100 bg-teal-100 dark:bg-teal-500 mr-4"
             >
                 {/* <svg fill="currentColor" viewBox="0 0 20 20" className="w-5 h-5">
                 <path
@@ -56,7 +56,7 @@ const StatsCard = ({category, unit, product, userData}) => {
                 <TagIcon className="h-5 w-5" />
             </div>
             <div>
-                <p className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+                <p className="mb-2 text-lg font-bold text-gray-600 dark:text-gray-400">
                 Total Categories
                 </p>
                 <p className="text-lg font-semibold text-gray-700 dark:text-gray-200">
@@ -80,7 +80,7 @@ const StatsCard = ({category, unit, product, userData}) => {
                 <AdjustmentsHorizontalIcon className="h-5 w-5" />
             </div>
             <div>
-                <p className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+                <p className="mb-2 text-lg font-bold text-gray-600 dark:text-gray-400">
                 Total units
                 </p>
                 <p className="text-lg font-semibold text-gray-700 dark:text-gray-200">
@@ -94,7 +94,7 @@ const StatsCard = ({category, unit, product, userData}) => {
         >
             <div className="p-4 flex items-center">
             <div
-                className="p-3 rounded-full text-teal-500 dark:text-teal-100 bg-teal-100 dark:bg-teal-500 mr-4"
+                className="p-3 rounded-full text-green-500 dark:text-green-100 bg-green-100 dark:bg-green-500 mr-4"
             >
                 {/* <svg fill="currentColor" viewBox="0 0 20 20" className="w-5 h-5">
                 <path
@@ -106,7 +106,7 @@ const StatsCard = ({category, unit, product, userData}) => {
                 <ShoppingBagIcon className="h-5 w-5" />
             </div>
             <div>
-                <p className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+                <p className="mb-2 text-lg font-bold text-gray-600 dark:text-gray-400">
                 Total Products
                 </p>
                 <p className="text-lg font-semibold text-gray-700 dark:text-gray-200">

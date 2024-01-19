@@ -141,7 +141,7 @@ const ManageProducts = ({user, isLoading, setIsLoading}) => {
           </div>
         </div>
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-            <div className="flex gap-2 items-center">
+            {/* <div className="flex gap-2 items-center">
               <span className="text-sm">Show</span>
                 <select
                   className="w-12 rounded-md border-0">
@@ -150,7 +150,7 @@ const ManageProducts = ({user, isLoading, setIsLoading}) => {
                   <option>100</option>
                 </select>
               <span className="text-sm">entries</span>
-            </div>
+            </div> */}
           <div className="w-full md:w-72">
               <Input
                 label="Search"
@@ -273,7 +273,7 @@ const ManageProducts = ({user, isLoading, setIsLoading}) => {
             </tbody>
             </table>
           </CardBody>
-      <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
+      {/* <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
         <Typography variant="small" color="blue-gray" className="font-normal">
           Page 1 of 10
         </Typography>
@@ -285,7 +285,7 @@ const ManageProducts = ({user, isLoading, setIsLoading}) => {
             Next
           </Button>
         </div>
-      </CardFooter>
+      </CardFooter> */}
     </Card>
 
 <ModalProduct 
