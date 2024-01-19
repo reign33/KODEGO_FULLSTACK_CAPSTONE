@@ -27,3 +27,45 @@
   }
   
 
+  .calculator {
+    max-width: 300px;
+    margin: auto;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .display {
+    background-color: #f0f0f0;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .display input {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 5px;
+    font-size: 1.2em;
+  }
+  
+  .display .result {
+    display: block;
+    font-size: 1.5em;
+  }
+  
+  .buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+  }
+  
+  button {
+    padding: 10px;
+    font-size: 1.2em;
+    cursor: pointer;
+  }
+  
+  button.clear {
+    grid-column: span 2;
+  }
+  
+
