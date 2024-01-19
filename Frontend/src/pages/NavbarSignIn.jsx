@@ -8,7 +8,9 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useNavigate } from 'react-router-dom'
 import Logo from '../asset/REL_Logo.png'
 import Date from '../components/Date'
+import Calculator from '../components/Calculator'
 import ModalAvatar from '../components/ModalAvatar';
+import CalculatorButton from '../components/CalculatorButton';
 
 const navigation = [
   { name: 'Calendar', href: '#', current: true },
@@ -79,6 +81,13 @@ export default function NavbarSignIn({user, setUser,}) {
                   <div className="flex space-x-4">
                     <div >
                     <Date/>
+                    </div>
+                  </div>
+                </div>
+                <div className="hidden sm:ml-6 sm:block">
+                  <div className="flex space-x-4">
+                    <div >
+                    <CalculatorButton/>
                     </div>
                   </div>
                 </div>
