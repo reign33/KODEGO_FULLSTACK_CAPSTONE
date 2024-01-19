@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react';
 import { useState, } from 'react';
+import LoadingSpinner from './LoadingSpinner';
 import {
   Input,
   Button,
@@ -8,59 +9,95 @@ import {
   DialogHeader,
   DialogBody,
   DialogFooter,
-  isLoading
   } from "@material-tailwind/react";
 import profileService from '../services/profileService';
+import userService from '../services/userService';
+import { useNavigate } from 'react-router-dom';
 
 const ModalAvatar = ({
+  user,
+  setUser,
   open,  
+  setOpen,
   handleOpen, 
   profile, 
-  setProfile, 
-  setIsLoading,
+  setProfile,
+  loading2,
+  setLoading2,
 
 }) => {
 
   const [newFile, setNewFile] = useState(null);
   const [fileId, setFileId] = useState(null);
+  const [userName, setUserName] = useState("");
+  const [loading3, setLoading3] = useState(false);
+  const [compare, setCompare]=useState([]);
+  const [getcompare, setGetCompare] =useState(null);
+  const navigate = useNavigate();
 
+  useEffect(()=>{
+    userService.getUsers().then((res)=>{
+      setCompare(res);
+    });
+
+  }, []);
+
+  const UpdateUserName = () =>{
+
+    compare.find((data)=>{
+      if(data.name === user.name || data.username === user.username){
+    setLoading3(true);
+    setGetCompare(data);
+    const newName = { name: userName };
+      userService
+        .updateUserName(data.id, newName)
+        .then((res) => {
+          setUserName("");
+          console.log("data ng user ID if", data.name);
+        })
+        .catch((error) => console.log(error))
+        .finally(() =>  setLoading3(false));
+        }else{
+          console.log("username list", data.username);
+        }})
+    };
+
+   
     const handleSubmit = (e) => {
       e.preventDefault();
+      setLoading2(true);
 
-      if (profile._id) {
+      if (profile) {
+        profile.map((data)=>{
+
         profileService
-          .deleteProfile(profile.id.toString())
+          .deleteProfile(data.id)
           .then((_) => {
             setFileId(null);// Reset fileId after successful deletion
+            setLoading2(false);
           })
-          .catch((error) => console.log(error));
+          .catch((error) => console.log(error));})
       }
 
         const profileformData = new FormData();
         profileformData.append("image", newFile);
   
+        // if(!newFile){
         profileService
           .createProfile(profileformData)
           .then((res) => {
             setProfile(profile.concat(res));
             setNewFile(null);
+            setLoading2(false);
           })
           .catch((error) => console.log(error))
           .finally(() =>{
             setOpen(false);
-            setIsLoading(false);
           })
+        // } else {navigate('/');}
     };
 
-    if (isLoading === true) {
-      return (
-        <div className="flex justify-center items-center">
-          <LoadingSpinner />
-        </div>
-      );
-    }
-  
-  
+    
   return (
    
 <Dialog open={open} size="xs" handler={handleOpen}>
@@ -89,24 +126,37 @@ const ModalAvatar = ({
 
   <DialogBody>
     <Typography className="mb-10 -mt-7 " color="gray" variant="lead">
-    Profile Settings
+    Update Your Profile Photo.
     </Typography>
 
     <div className="grid gap-6">
       <input
+        className='mb-[10px]'
           type="file"
           accept="image/*"
           onChange={(e) => setNewFile(e.target.files[0])}
           />
-           <p>Update Your Avatar.</p>
       </div>
 
-      <Typography className="-mb-1" color="blue-gray" variant="h6">
-        {/* {profile.length>0
-        ? `Update your Name "${Array.isArray(profile) && profile.map(data=>data.name)}" ?` 
-        : "Add Name"} */}
-        Add Name
-      </Typography>
+     
+        <div className="grid gap-6 mb-[10px]">
+        {loading3 === true
+        ? <div className="flex justify-center items-center">
+          <LoadingSpinner />
+          </div>
+        : <Input 
+          type='text'
+          label= {
+            !getcompare? "Your Name: " + user?.name + "." 
+            : "Change name success! will take effect in your next login Thanks"}
+          value={userName}
+          onChange={(e)=>{setUserName(e.target.value)}}
+       />}
+        </div>
+  
+      <Button onClick={UpdateUserName} 
+      variant="gradient" color="gray">Update Name</Button>
+      
   </DialogBody>
 
 

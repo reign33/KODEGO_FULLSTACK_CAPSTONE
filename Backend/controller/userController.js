@@ -15,6 +15,8 @@ async function getUsers(req, res) {
     quantity: 1,
     unit: 1,
     price:1,
+  }).populate("profile",{
+    photoInfo:1,
   });
   return res.json(users);
 } //this function is just for checking para pwede i hit sa browser for testing
@@ -87,9 +89,33 @@ async function deleteUser(req, res, next) {
   }
 }
 
+
+async function updateName(req, res, next) {
+  const id = req.params.id;
+  const { name, } = req.body;
+  const yourName = {
+   name,
+  };
+
+  try {
+    const updatedName = await User.findByIdAndUpdate(id, yourName, {
+      new: true,
+      runValidators: true,
+      context: "query",
+    });
+
+    if (!updatedName) return res.status(404).send({ error: "Name not found!" });
+
+    return res.status(200).json(updatedName);
+  } catch (error) {
+    next(error);
+  }
+}
+
 export default {
   createUser,
   getUsers,
   loginUser,
   deleteUser,
+  updateName,
 };
